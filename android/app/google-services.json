@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "130578697972",
+    "firebase_url": "https://walking-app-1eadb.firebaseio.com",
+    "project_id": "walking-app-1eadb",
+    "storage_bucket": "walking-app-1eadb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130578697972:android:7703599ca08ebb3cf258a1",
+        "android_client_info": {
+          "package_name": "com.honghm.walkingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130578697972-04v5quljmv7us9jinhulfpim3m2kfe6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.honghm.walkingapp",
+            "certificate_hash": "851482f8cbdca687b98eab2382b88b84a4ecc763"
+          }
+        },
+        {
+          "client_id": "130578697972-e7vulm8fantu587i7vtintk7jcqlvhga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0c6sTRRZMzeTeiGxQGRc72ZSMEJhUJ0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130578697972-e7vulm8fantu587i7vtintk7jcqlvhga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
