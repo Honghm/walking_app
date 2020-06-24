@@ -16,7 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passController = new TextEditingController();
   TextEditingController _phoneController = new TextEditingController();
-
+  TextEditingController _rePassController = new TextEditingController();
   final _key = GlobalKey<ScaffoldState>();
 
   //final AuthService _auth = AuthService();
@@ -132,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: TextField(
-                            controller: _passController,
+                            controller: _rePassController,
                             style: TextStyle(fontSize: 18, color: Colors.black),
                             obscureText: true,
                             decoration: InputDecoration(
@@ -189,24 +189,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             height: 52,
                             child: RaisedButton(
                               onPressed: () async {
-                                user.checkMail(_emailController.text);
-                                if(user.isMailExist == true){
-                                  print("mail da ton tai");
-                                }else{
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder:
-                                              (context) =>
-                                              RegisterPageCoun(_nameController.text,
-                                                  _emailController.text,
-                                                  _passController.text,
-                                                  _phoneController.text)
-                                      )
-                                  );
-                                }
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                            RegisterPageCoun(_nameController.text,
+                                                _emailController.text,
+                                                _passController.text,
+                                                _phoneController.text)
+                                    )
+                                );
 
-                                    },
+                                },
                               child: Text(
                                 "Tiếp tục",
                                 style: TextStyle(

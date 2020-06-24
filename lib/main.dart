@@ -9,6 +9,7 @@ import 'package:walkingapp/screens/intro_page.dart';
 import 'package:walkingapp/screens/login_page.dart';
 import 'package:walkingapp/screens/main_page.dart';
 import 'package:walkingapp/screens/profile_page.dart';
+import 'package:walkingapp/screens/register_page.dart';
 //import 'package:runningapp/test.dart';
 
 void main() {
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/main':(context)=>MainPage(),
         '/login':(context)=>LoginPage(),
         '/profile': (context)=>ProfilePage(),
+        '/register': (context)=>RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
       home: IntroPage(),

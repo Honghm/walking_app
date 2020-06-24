@@ -156,11 +156,15 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                             height: 52,
                             child: RaisedButton(
                               onPressed:  ()async{
-                                if (!await user.signUp(
-                                widget._name,widget._email, widget._pass, widget._phone,_weightController.text, _heightController.text, _genderController.text)) {
-                                _key.currentState.showSnackBar(SnackBar(
-                                content: Text("Đăng ký thất bại")));
-                                return;
+                                if(user.isMailExist==false)
+                                  user.signUp_Google( widget._name,widget._email, widget._phone,_weightController.text, _heightController.text, _genderController.text);
+                                else{
+                                  if (!await user.signUp(
+                                      widget._name,widget._email, widget._pass, widget._phone,_weightController.text, _heightController.text, _genderController.text)) {
+                                    _key.currentState.showSnackBar(SnackBar(
+                                        content: Text("Đăng ký thất bại")));
+                                    return;
+                                  }
                                 }
                                 changeScreenReplacement(context, LoginPage());
                                 },

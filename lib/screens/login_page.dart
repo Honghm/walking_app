@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:walkingapp/config/initialization.dart';
 import 'package:walkingapp/provider/home_provider.dart';
 import 'package:walkingapp/provider/user_provider.dart';
+import 'package:walkingapp/screens/login_with_google.dart';
 import 'package:walkingapp/widgets/loading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:walkingapp/widgets/loading.dart';
@@ -180,12 +181,15 @@ class _LoginPageState extends State<LoginPage> {
                         height: 52,
                         child: RaisedButton(
                           onPressed: () async {
-                            bool res = await user.loginWithGoogle();
-                            if(!res)
-                              print("error logging in with google");
-                            else
-                            {
-                              Navigator.pushNamed(context, '/main');
+                            user.googleSignIn.disconnect();
+                            if(await user.loginWithGoogle()){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LoginWithGoogle()));
+                            }else{
+                              print("login home page");
                             }
                           },
                           child: Row(
