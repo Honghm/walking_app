@@ -235,17 +235,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     Card(
                         child: ListTile(
                           leading: Icon(
-                            Icons.email,
+                            Icons.account_circle,
                             size: 40,
                             color: Colors.blueAccent,
                           ),
                           title: Text(
-                            "Email",
+                            "Tài khoản",
                             style: TextStyle(
                                 fontSize: 18, color: Colors.blueAccent),
                           ),
                           subtitle: Text(
-                            user.userData.email,
+                            user.userData.account,
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,

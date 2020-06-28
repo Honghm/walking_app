@@ -156,7 +156,7 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                             height: 52,
                             child: RaisedButton(
                               onPressed:  ()async{
-                                if(user.isMailExist==false)
+                                if(user.loginGoogle==true)
                                   user.signUp_Google( widget._name,widget._email, widget._phone,_weightController.text, _heightController.text, _genderController.text);
                                 else{
                                   if (!await user.signUp(

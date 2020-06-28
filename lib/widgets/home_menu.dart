@@ -29,7 +29,7 @@ class _HomeMenuState extends State<HomeMenu> {
               user.userData.name,
               style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            accountEmail: Text(user.userData.email),
+            accountEmail: Text(user.userData.account),
             currentAccountPicture: GestureDetector(
               child: ClipOval(
                 child: SizedBox(
