@@ -202,7 +202,7 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                             child: RaisedButton(
                               onPressed: () async {
                                 print(selectedGender.gender);
-                                if (user.isMailExist == false)
+                                if (user.loginGoogle==true)
                                   user.signUp_Google(
                                       widget._name,
                                       widget._email,

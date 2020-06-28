@@ -27,6 +27,9 @@ class UserProvider with ChangeNotifier {
     _isMailExist = value;
   }
 
+  bool _isLogin = false;
+
+  bool get isLogin => _isLogin;
   bool _isMailExist = false;
   bool _loginGoogle = false;
 
@@ -39,7 +42,7 @@ class UserProvider with ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
   //GoogleSignIn googleSignIn = GoogleSignIn();
-  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['profile', 'account']);
 
   GoogleSignInAccount account;
 
@@ -48,41 +51,52 @@ class UserProvider with ChangeNotifier {
   }
 
   //--------------------Đăng Nhập-----------------------------
-  Future<bool> signIn(String email, String password) async {
-    try {
-      _status = Status.Authenticating;
-      notifyListeners();
-      _loginGoogle = false;
-      notifyListeners();
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((user) {
+
+  Future<bool> signIn(String account, String password, BuildContext context, GlobalKey<ScaffoldState> _key) {
+    Firestore.instance
+        .collection('users')
+        .where("account", isEqualTo: account)
+        .snapshots()
+        .listen((data) {
+      if (data.documents.length != 0) {
+        print("đúng tài khoản");
         Firestore.instance
             .collection('users')
-            .where("email", isEqualTo: email)
+            .where("pass", isEqualTo: password)
             .snapshots()
-            .listen((data) => data.documents.forEach((doc) {
-                  _userData = UserData.formSnapShot(doc);
-                  notifyListeners();
-                }));
-      });
-      return true;
-    } catch (e) {
-      _status = Status.Unauthenticated;
-      notifyListeners();
-      return false;
-    }
+            .listen((data) async {
+          if (data.documents.length != 0) {
+            print("đúng pass");
+            Firestore.instance
+                .collection('users')
+                .where("account", isEqualTo: account)
+                .snapshots()
+                .listen((data) => data.documents.forEach((doc) {
+                      _userData = UserData.formSnapShot(doc);
+                      notifyListeners();
+                    }));
+            Navigator.pushNamed(context, '/main');
+          } else {
+            _key.currentState.showSnackBar(SnackBar(
+                content: Text("Tài khoản hoặc mật khẩu không đúng")));
+            print("đăng nhập không thành công");
+          }
+        });
+      }
+    });
   }
 
   Future<bool> loginWithGoogle() async {
     try {
+      _loginGoogle = true;
+      notifyListeners();
       _status = Status.Authenticating;
       notifyListeners();
       account = await googleSignIn.signIn();
       notifyListeners();
       Firestore.instance
           .collection('users')
-          .where("email", isEqualTo: account.email)
+          .where("account", isEqualTo: account.email)
           .snapshots()
           .listen((data) async {
         if (data.documents.length == 0) {
@@ -106,7 +120,7 @@ class UserProvider with ChangeNotifier {
               .then((user) {
             Firestore.instance
                 .collection('users')
-                .where("email", isEqualTo: account.email)
+                .where("account", isEqualTo: account.email)
                 .snapshots()
                 .listen((data) => data.documents.forEach((doc) {
                       _userData = UserData.formSnapShot(doc);
@@ -127,25 +141,26 @@ class UserProvider with ChangeNotifier {
   }
 
   //-------------------Đăng Ký-------------------------------------
-  Future<bool> signUp(String name, String email, String password, String phone,
-      String weight, String height, String gender) async {
+
+  Future<bool> signUp(String name, String account, String password,
+      String phone, String weight, String height, String gender) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((user) {
+      await _auth.signInAnonymously().then((user) {
         _firestore.collection('users').document(user.user.uid).setData({
           'name': name,
-          'email': email,
-          'pass':password,
+          'account': account,
+          'pass': password,
           'uid': user.user.uid,
           'phone': phone,
           'weight': weight,
           'height': height,
           'gender': gender,
-          'url_avt': 'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background.jpg?alt=media&token=a122f72e-73fa-4743-9090-0e0eb40711e9',
-          'url_cover': 'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background_profile.jpg?alt=media&token=d1f8afc3-c99d-40bd-a4d7-ba8b87ddc0a9'
+          'url_avt':
+              'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background.jpg?alt=media&token=a122f72e-73fa-4743-9090-0e0eb40711e9',
+          'url_cover':
+              'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background_profile.jpg?alt=media&token=d1f8afc3-c99d-40bd-a4d7-ba8b87ddc0a9'
         });
       });
       return true;
@@ -162,14 +177,16 @@ class UserProvider with ChangeNotifier {
     try {
       _firestore.collection('users').document(account.id).setData({
         'name': name,
-        'email': email,
+        'account': email,
         'uid': account.id,
         'phone': phone,
         'weight': weight,
         'height': height,
         'gender': gender,
-        'url_avt': 'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background.jpg?alt=media&token=a122f72e-73fa-4743-9090-0e0eb40711e9',
-        'url_cover': 'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background_profile.jpg?alt=media&token=d1f8afc3-c99d-40bd-a4d7-ba8b87ddc0a9'
+        'url_avt':
+            'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background.jpg?alt=media&token=a122f72e-73fa-4743-9090-0e0eb40711e9',
+        'url_cover':
+            'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background_profile.jpg?alt=media&token=d1f8afc3-c99d-40bd-a4d7-ba8b87ddc0a9'
       });
       return true;
     } catch (e) {
@@ -268,27 +285,33 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool checkMail(String email) {
-    try {
-      Firestore.instance
-          .collection('users')
-          .where("email", isEqualTo: email)
-          .snapshots()
-          .listen((data) {
-        print("đang kiểm tra");
-        print(data.documents.length);
-        if (data.documents.length == 0) {
-          isMailExist = true;
-          notifyListeners();
-          return true;
-        } else {
-          isMailExist = false;
-          notifyListeners();
-          return false;
-        }
-      });
-    } catch (e) {
-      //return false;
-    }
+  Future<bool> checkAccount(String account, String password) async {
+    Firestore.instance
+        .collection('users')
+        .where("account", isEqualTo: account)
+        .snapshots()
+        .listen((data) {
+      if (data.documents.length != 0) {
+        print("đúng tài khoản");
+        Firestore.instance
+            .collection('users')
+            .where("pass", isEqualTo: password)
+            .snapshots()
+            .listen((data) {
+          if (data.documents.length != 0) {
+            print("đúng pass");
+            Firestore.instance
+                .collection('users')
+                .where("account", isEqualTo: account)
+                .snapshots()
+                .listen((data) => data.documents.forEach((doc) {
+                      _userData = UserData.formSnapShot(doc);
+                      notifyListeners();
+                    }));
+          }
+        });
+      }
+    });
+    return true;
   }
 }

@@ -189,6 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             height: 52,
                             child: RaisedButton(
                               onPressed: () async {
+                                user.loginGoogle = false;
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

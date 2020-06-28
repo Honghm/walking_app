@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserData {
   static const ID = 'uid';
   static const NAME = 'name';
-  static const EMAIL = 'email';
+  static const ACCOUNT = 'account';
   static const PHONE = 'phone';
   static const PASS = 'pass';
   static const HEIGHT = 'height';
@@ -12,7 +12,7 @@ class UserData {
   static const URL_COVER = 'url_cover';
   String _id;
   String _name;
-  String _email;
+  String _account;
   String _phone;
   String _pass;
   String _weight;
@@ -48,7 +48,6 @@ class UserData {
 
   String get name => _name;
 
-  String get email => _email;
 
   String get phone => _phone;
 
@@ -58,7 +57,7 @@ class UserData {
     Map data = snapshot.data;
     _id = data[ID];
     _name = data[NAME];
-    _email = data[EMAIL];
+    _account = data[ACCOUNT];
     _phone = data[PHONE];
     _weight = data[WEIGHT];
     _height = data[HEIGHT];
@@ -66,8 +65,11 @@ class UserData {
     _urlCover = data[URL_COVER];
   }
 
-  set email(String value) {
-    _email = value;
+
+  String get account => _account;
+
+  set account(String value) {
+    _account = value;
   }
 
   set phone(String value) {
