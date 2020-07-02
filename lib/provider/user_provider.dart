@@ -87,8 +87,6 @@ class UserProvider with ChangeNotifier {
 
   Future<bool> loginWithGoogle() async {
     try {
-      _loginGoogle = true;
-      notifyListeners();
       _status = Status.Authenticating;
       notifyListeners();
       account = await googleSignIn.signIn();
@@ -129,7 +127,6 @@ class UserProvider with ChangeNotifier {
                     }));
           });
         }
-        return true;
       });
       return true;
     } catch (e) {

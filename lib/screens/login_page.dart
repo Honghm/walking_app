@@ -176,8 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 52,
                         child: RaisedButton(
                           onPressed: () async {
-                            //user.loginGoogle = true;
-                            //user.googleSignIn.disconnect();
+                            user.googleSignIn.disconnect();
                             if(await user.loginWithGoogle()){
                               Navigator.push(
                                   context,
@@ -185,8 +184,8 @@ class _LoginPageState extends State<LoginPage> {
                                       builder: (context) =>
                                           LoginWithGoogle()));
                             }else{
-                              _key.currentState.showSnackBar(SnackBar(
-                                  content: Text("Tài khoản hoặc mật khẩu không đúng")));
+//                              _key.currentState.showSnackBar(SnackBar(
+//                                  content: Text("Tài khoản hoặc mật khẩu không đúng")));
                             }
                           },
                           child: Row(
