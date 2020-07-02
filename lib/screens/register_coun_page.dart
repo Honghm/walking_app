@@ -135,7 +135,9 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                               ),
                               Container(
 
-                                child: Column(children: <Widget>[Padding(
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
                                   //----------Giới tính---------------
                                   padding: const EdgeInsets.fromLTRB(0,50,0,10),
                                   child: Row(
@@ -240,19 +242,14 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(
-                                            Icons.people,
-                                            color: Colors.black45,
-                                          ),
-                                          Padding(
-                                            padding:
-                                            const EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              "Cân Nặng",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black45),
-                                            ),
+                                          Container(
+                                              width: 50,
+                                              child: Image.asset("assets/images/icon_weight.png")),
+                                          Text(
+                                            "Cân Nặng",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black45),
                                           ),
                                         ],
                                       ),
@@ -357,19 +354,14 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.people,
-                                              color: Colors.black45,
-                                            ),
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.only(left: 10),
-                                              child: Text(
-                                                "Chiều cao",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black45),
-                                              ),
+                                            Container(
+                                                width: 50,
+                                                child: Image.asset("assets/images/icon_height.png")),
+                                            Text(
+                                              "Chiều cao",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black45),
                                             ),
                                           ],
                                         ),
@@ -472,10 +464,7 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
-                                          Icon(
-                                            Icons.people,
-                                            color: Colors.black45,
-                                          ),
+
                                           Padding(
                                             padding:
                                             const EdgeInsets.only(left: 10),
@@ -504,7 +493,7 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                                   builder: (context) {
                                                     return new AlertDialog(
                                                       title: Text(
-                                                        "Cân nặng cơ thể",
+                                                        "Độ dài bước chân",
                                                         style:
                                                         TextStyle(fontSize: 18),
                                                       ),
@@ -521,11 +510,6 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                                                   integer = val6;
                                                                 });
                                                               }),
-                                                          Text(
-                                                            ",",
-                                                            style: TextStyle(
-                                                                fontSize: 18),
-                                                          ),
 
                                                         ],
                                                       ),
@@ -575,92 +559,6 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
 
                               ),
 
-
-                        //----------Cân nặng------------
-                        TextField(
-                          controller: _weightController,
-                          style: TextStyle(
-                              fontSize: 18, color: Colors.black),
-                          decoration: InputDecoration(
-                              labelText: "Cân nặng",
-                              prefixIcon: Container(
-                                  width: 50,
-                                  child: Image.asset("assets/images/icon_weight.png")),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xffCED0D2), width: 1),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(6)))),
-                        ),
-                        Padding(
-                          padding:
-                          const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: TextField(
-                            controller: _heightController,
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.black),
-                            decoration: InputDecoration(
-                                labelText: "Chiều cao",
-                                prefixIcon: Container(
-                                    width: 50,
-                                    child: Image.asset("assets/images/icon_height.png")),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Color(0xffCED0D2),
-                                        width: 1),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(6)))),
-                          ),
-                        ),
-
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 30, 0, 10),
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  height: 52,
-                                  child: RaisedButton(
-                                    onPressed: () async {
-                                      print(selectedGender.gender);
-                                      if (user.loginGoogle == true)
-                                        user.signUp_Google(
-                                            widget._name,
-                                            widget._email,
-                                            widget._phone,
-                                            weight.toString(),
-                                            height,
-                                            selectedGender.gender);
-                                      else {
-                                        if (!await user.signUp(
-                                            widget._name,
-                                            widget._email,
-                                            widget._pass,
-                                            widget._phone,
-                                            weight.toString(),
-                                            height,
-                                            selectedGender.gender)) {
-                                          _key.currentState.showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      "Đăng ký thất bại")));
-                                          return;
-                                        }
-                                      }
-                                      changeScreenReplacement(
-                                          context, LoginPage());
-                                    },
-                                    child: Text(
-                                      "Đăng ký",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
-                                    ),
-                                    color: Color(0xff3277D8),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(6))),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -671,8 +569,4 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
     );
   }
 
-  void changeScreenReplacement(BuildContext context, Widget widget) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => widget));
-  }
 }
