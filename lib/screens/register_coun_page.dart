@@ -441,6 +441,27 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                         ),
                                       ),
                                     ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                      child: RichText(
+                                        text: TextSpan(
+                                            text: "Bạn đã có tài khoản? ",
+                                            style: TextStyle(
+                                                color: Color(0xff606470), fontSize: 16),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  recognizer: TapGestureRecognizer()
+                                                    ..onTap = () {
+                                                      Navigator.pushNamed(context,'/login');
+                                                    },
+                                                  text: "Đăng nhập ngay",
+                                                  style: TextStyle(
+                                                      color: Color(0xff3277D8),
+                                                      fontSize: 16))
+                                            ]),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),

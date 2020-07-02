@@ -257,7 +257,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     TextSpan(
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            Navigator.pop(context);
+                                            Navigator.pushNamed(context,'/login');
                                           },
                                         text: "Đăng nhập ngay",
                                         style: TextStyle(
