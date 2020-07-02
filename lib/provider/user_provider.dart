@@ -5,6 +5,7 @@ import 'package:walkingapp/config/initialization.dart';
 import 'package:walkingapp/models/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:walkingapp/screens/login_with_google.dart';
 
 class UserProvider with ChangeNotifier {
   FirebaseAuth _auth;
@@ -41,7 +42,7 @@ class UserProvider with ChangeNotifier {
 
   Firestore _firestore = Firestore.instance;
 
-  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['profile', 'account']);
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['profile', 'email']);
 
   GoogleSignInAccount account;
 
@@ -85,8 +86,10 @@ class UserProvider with ChangeNotifier {
     });
   }
 
-  Future<bool> loginWithGoogle() async {
+  Future<bool> loginWithGoogle( BuildContext context, GlobalKey<ScaffoldState> _key) async {
     try {
+      loginGoogle = true;
+      notifyListeners();
       _status = Status.Authenticating;
       notifyListeners();
       account = await googleSignIn.signIn();
@@ -96,7 +99,6 @@ class UserProvider with ChangeNotifier {
           .where("account", isEqualTo: account.email)
           .snapshots()
           .listen((data) async {
-            print("đang ở đây");
         if (data.documents.length == 0) {
           await _auth
               .signInWithCredential(GoogleAuthProvider.getCredential(
@@ -106,6 +108,11 @@ class UserProvider with ChangeNotifier {
               .then((user) {
             _isMailExist = false;
             notifyListeners();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        LoginWithGoogle()));
             _status = Status.Unauthenticated;
             notifyListeners();
           });
@@ -126,6 +133,7 @@ class UserProvider with ChangeNotifier {
                       _isMailExist = true;
                       notifyListeners();
                     }));
+            Navigator.pushNamed(context, '/main');
           });
         }
       });

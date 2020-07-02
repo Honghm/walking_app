@@ -576,6 +576,42 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                               ),
 
 
+                        //----------Cân nặng------------
+                        TextField(
+                          controller: _weightController,
+                          style: TextStyle(
+                              fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Cân nặng",
+                              prefixIcon: Container(
+                                  width: 50,
+                                  child: Image.asset("assets/images/icon_weight.png")),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xffCED0D2), width: 1),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(6)))),
+                        ),
+                        Padding(
+                          padding:
+                          const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: TextField(
+                            controller: _heightController,
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.black),
+                            decoration: InputDecoration(
+                                labelText: "Chiều cao",
+                                prefixIcon: Container(
+                                    width: 50,
+                                    child: Image.asset("assets/images/icon_height.png")),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xffCED0D2),
+                                        width: 1),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(6)))),
+                          ),
+                        ),
 
                               Padding(
                                 padding:
