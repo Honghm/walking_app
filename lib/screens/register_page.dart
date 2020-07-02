@@ -94,12 +94,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         //----------Email---------------
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          padding: const EdgeInsets.fromLTRB(0, 40, 0, 10),
                           child: TextField(
                             keyboardType: TextInputType.emailAddress,
                             controller: _emailController,
                             style:
-                            TextStyle(fontSize: 16, color: Colors.black),
+                            TextStyle(fontSize: 18, color: Colors.black),
                             decoration: InputDecoration(
                                 labelText: "Email",
                                 prefixIcon: Container(
@@ -154,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: _nameController,
 
                             style:
-                            TextStyle(fontSize: 16, color: Colors.black),
+                            TextStyle(fontSize: 18, color: Colors.black),
                             decoration: InputDecoration(
                                 labelText: "Họ tên",
                                 prefixIcon: Container(
