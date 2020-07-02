@@ -96,6 +96,7 @@ class UserProvider with ChangeNotifier {
           .where("account", isEqualTo: account.email)
           .snapshots()
           .listen((data) async {
+            print("đang ở đây");
         if (data.documents.length == 0) {
           await _auth
               .signInWithCredential(GoogleAuthProvider.getCredential(
