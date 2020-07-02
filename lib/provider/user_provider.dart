@@ -41,7 +41,6 @@ class UserProvider with ChangeNotifier {
 
   Firestore _firestore = Firestore.instance;
 
-  //GoogleSignIn googleSignIn = GoogleSignIn();
   GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['profile', 'account']);
 
   GoogleSignInAccount account;

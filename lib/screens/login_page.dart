@@ -153,24 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                         child: RaisedButton(
                           onPressed: () async {
                             await user.signIn(_emailController.text, _passController.text, context, _key);
-
-                           // Future.delayed(Duration(seconds: 2), () => print(login));
-
-//                            if(user.signIn(_emailController.text, _passController.text) == true){
-//                              print("đăng nhập thành công");
-//                            }else{
-//                              print("đăng nhập không thành công");
-//                            }
-//                            if (!await user.signIn(_emailController.text, _passController.text))
-//                              _key.currentState.showSnackBar(SnackBar(
-//                                  content: Text("Tài khoản hoặc mật khẩu không đúng")));
-//                            else {
-//                              if(user.isLogin==true)
-//                                Navigator.pushNamed(context, '/main');
-//                              else
-//                                _key.currentState.showSnackBar(SnackBar(
-//                                    content: Text("Tài khoản hoặc mật khẩu không đúng")));
-//                            }
                           },
                           child: Text(
                             "Đăng nhập",
@@ -194,8 +176,8 @@ class _LoginPageState extends State<LoginPage> {
                         height: 52,
                         child: RaisedButton(
                           onPressed: () async {
-                            user.loginGoogle = true;
-                            user.googleSignIn.disconnect();
+                            //user.loginGoogle = true;
+                            //user.googleSignIn.disconnect();
                             if(await user.loginWithGoogle()){
                               Navigator.push(
                                   context,
@@ -203,7 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                                       builder: (context) =>
                                           LoginWithGoogle()));
                             }else{
-                              print("login home page");
+                              _key.currentState.showSnackBar(SnackBar(
+                                  content: Text("Tài khoản hoặc mật khẩu không đúng")));
                             }
                           },
                           child: Row(

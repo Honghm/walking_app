@@ -12,7 +12,7 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   static final CameraPosition initialLocation = CameraPosition(
     target: LatLng(13.7315172, 108.0598776),
-    zoom: 15,
+    zoom: 10,
   );
 
   @override

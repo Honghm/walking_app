@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:walkingapp/config/initialization.dart';
 import 'package:walkingapp/provider/home_provider.dart';
 import 'package:walkingapp/provider/timer_provider.dart';
 import 'package:walkingapp/provider/user_provider.dart';
 import 'package:walkingapp/widgets/chart_view.dart';
 import 'package:walkingapp/widgets/count_view.dart';
 import 'package:walkingapp/widgets/google_map.dart';
-import 'package:walkingapp/widgets/loading.dart';
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -29,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: <Widget>[
         //---------------Map View------------------------
-        //(time.statusLoading == Status.Authenticating) ? Container(height: 350,child: Loading()) :
         MapView(),
 
         Container(
@@ -147,7 +143,12 @@ class _HomePageState extends State<HomePage> {
               ),
 
               //-----------Count View-----------------------
-              Container(child: CountView()),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Container(
+                  height: 200,
+                    child: CountView()),
+              ),
             ],
           ),
         ),

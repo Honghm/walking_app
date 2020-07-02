@@ -4,15 +4,13 @@ import 'package:walkingapp/provider/chart_provider.dart';
 import 'package:walkingapp/provider/home_provider.dart';
 import 'package:walkingapp/provider/timer_provider.dart';
 import 'package:walkingapp/provider/user_provider.dart';
-import 'package:walkingapp/screens/home_page.dart';
 import 'package:walkingapp/screens/intro_page.dart';
 import 'package:walkingapp/screens/login_page.dart';
 import 'package:walkingapp/screens/main_page.dart';
 import 'package:walkingapp/screens/profile_page.dart';
 import 'package:walkingapp/screens/register_page.dart';
-//import 'package:runningapp/test.dart';
-
 void main() {
+
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider.value(value: UserProvider.initialize()),
@@ -41,3 +39,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+

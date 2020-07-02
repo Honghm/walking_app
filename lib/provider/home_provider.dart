@@ -77,25 +77,30 @@ class HomeProvider with ChangeNotifier {
     }
     try {
       var location = await _locationTracker.getLocation();
+      var lat = num.parse(location.latitude.toStringAsFixed(6));
+      var long = num.parse(location.longitude.toStringAsFixed(6));
       if (Case == 1) {
-        latlngs.add(LatLng(location.latitude, location.longitude));
+        latlngs.add(LatLng(lat, long));
       }
       _controller.animateCamera(CameraUpdate.newCameraPosition(
           new CameraPosition(
               bearing: 192.8334901395799,
-              target: LatLng(location.latitude, location.longitude),
+              target: LatLng(lat, long),
               tilt: 0,
-              zoom: 22.00)));
+              zoom: 18.00)));
 
       if (context == null)
         updateMap(location, _context);
       else
         updateMap(location, context);
+      print(lat);
+      print(long);
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         debugPrint("Permission Denied");
       }
     }
+
   }
 
   void dispose() {
