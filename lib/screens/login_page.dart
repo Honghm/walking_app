@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                             labelText: "Tài khoản",
                             prefixIcon: Container(
-                                width: 50, child: Icon(Icons.email)),
+                                width: 50, child: Icon(Icons.account_circle)),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors.red, width: 2),
@@ -199,15 +199,18 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Icon(FontAwesomeIcons.google,
-                                  color: Color(0xffCE107C),),
-                                SizedBox(width: 10.0),
-                                Text(
-                                  'Sign in with Google',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.0),
+                                  color: Colors.blue,),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 40),
+                                  child: Text(
+                                    'Sign in with Google',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18.0,fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ],),
-                            color: Color(0xffdd4b39),
+                            color: Colors.red,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(6))),
@@ -248,9 +251,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  void changeScreenReplacement(BuildContext context, Widget widget) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => widget));
-  }
-
 }

@@ -110,9 +110,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               style:
                               TextStyle(fontSize: 16, color: Colors.black),
                               decoration: InputDecoration(
-                                  labelText: "Email",
+                                  labelText: "Tài khoản",
                                   prefixIcon: Container(
-                                      width: 50, child: Icon(Icons.email)),
+                                      width: 50, child: Icon(Icons.account_circle)),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Color(0xffCED0D2), width: 1),

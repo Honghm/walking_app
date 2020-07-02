@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -11,7 +10,7 @@ import 'package:walkingapp/widgets/loading.dart';
 class Gender {
   const Gender(this.icon, this.gender);
 
-  final Icon icon;
+  final String icon;
   final String gender;
 }
 
@@ -28,31 +27,17 @@ class RegisterPageCoun extends StatefulWidget {
 }
 
 class _RegisterPageStateCoun extends State<RegisterPageCoun> {
-  TextEditingController _weightController = new TextEditingController();
-  TextEditingController _heightController = new TextEditingController();
-  String Gender_text;
-  TabController tb;
-  int inte = 45;
   int integer = 30;
-  int decal = 5;
-  double weight = 0;
-  int height1 = 0;
-  int height2 = 1;
-  int footstep =0;
-  String height = '0m';
+  double weight = 0.0;
+  double height = 0.0;
+  int footstep = 0;
   Gender selectedGender;
   List<Gender> genders = <Gender>[
     const Gender(
-        Icon(
-          Icons.people,
-          color: Colors.black45,
-        ),
+        "assets/images/man.png",
         'Nam'),
     const Gender(
-        Icon(
-          Icons.people,
-          color: Colors.black45,
-        ),
+        "assets/images/woman.png",
         'Nữ')
   ];
 
@@ -134,431 +119,279 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                     fontSize: 16, color: Colors.white),
                               ),
                               Container(
-
                                 child: Column(
                                   children: <Widget>[
+                                    //----------Giới tính---------------
                                     Padding(
-                                  //----------Giới tính---------------
-                                  padding: const EdgeInsets.fromLTRB(0,50,0,10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Row(
+                                      padding: const EdgeInsets.fromLTRB( 0, 50, 0, 10),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          Icon(
-                                            Icons.people,
-                                            color: Colors.black45,
+                                          Row(
+                                            children: <Widget>[
+                                              Icon(
+                                                Icons.people,
+                                                color: Colors.black45,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 10),
+                                                child: Text(
+                                                  "Giới tính",
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black45),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10),
-                                            child: Text(
-                                              "Giới tính",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black45),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 150,
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black45),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(6),
-                                            )),
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<Gender>(
-                                            hint: Padding(
-                                              padding:
-                                              const EdgeInsets.only(left: 15),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        left: 10),
-                                                    child: Text(
-                                                      "Nữ",
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.black45),
-                                                    ),
+                                          Container(
+                                            width: 140,
+                                            height: 60,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(color: Colors.black45),
+                                                borderRadius: BorderRadius.all(Radius.circular(6),)),
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton<Gender>(
+                                                hint: Padding(
+                                                  padding:const EdgeInsets.only(left: 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:const EdgeInsets.only(left: 10),
+                                                        child: Text(
+                                                          "Nam/Nữ",style: TextStyle(fontSize: 18,color: Colors.black45),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
+                                                ),
+                                                value: selectedGender,
+                                                //items: _dropdownMenuItems,
+                                                onChanged: //onChangeDropdownItem,
+                                                    (Gender Value) {
+                                                  setState(() {
+                                                    selectedGender = Value;
+
+                                                    if (selectedGender.gender =='Nữ') {
+                                                      weight = 45;
+                                                      height = 1.6;
+                                                      footstep = 25;
+
+                                                    } else {
+                                                      weight = 60.0;
+                                                      height = 1.8;
+                                                      footstep = 30;
+                                                    }
+                                                  });
+                                                },
+                                                items: genders.map((Gender gender) {
+                                                  return DropdownMenuItem<Gender>(
+                                                    value: gender,
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left: 10),
+                                                          child: Container(
+                                                              height: 25,
+                                                              child: Image.asset(gender.icon)),
+                                                        ),
+                                                        Padding(
+                                                          padding:const EdgeInsets.only(left: 20),
+                                                          child: Text(
+                                                            gender.gender,
+                                                            style: TextStyle(color: Colors.black45,fontSize: 18),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }).toList(),
                                               ),
                                             ),
-                                            value: selectedGender,
-                                            //items: _dropdownMenuItems,
-                                            onChanged: //onChangeDropdownItem,
-                                                (Gender Value) {
-                                              setState(() {
-                                                selectedGender = Value;
-                                                footstep = 30;
-                                                if (selectedGender.gender == 'Nữ') {
-                                                  weight = 45; height='1m60';
-                                                } else {
-                                                  weight = 60; height='1m80';
-                                                }
-                                              });
-                                            },
-                                            items: genders.map((Gender gender) {
-                                              return DropdownMenuItem<Gender>(
-                                                value: gender,
-                                                child: Row(
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          left: 15),
-                                                      child: gender.icon,
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          left: 10),
-                                                      child: Text(
-                                                        gender.gender,
-                                                        style: TextStyle(
-                                                            color: Colors.black45,
-                                                            fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                                  //----------Cân nặng------------
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Container(
-                                              width: 50,
-                                              child: Image.asset("assets/images/icon_weight.png")),
-                                          Text(
-                                            "Cân Nặng",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.black45),
                                           ),
                                         ],
                                       ),
-                                      Container(
-                                          width: 150,
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                              border:
-                                              Border.all(color: Colors.black45),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(6),
-                                              )),
-                                          child: MaterialButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return new AlertDialog(
-                                                      title: Text(
-                                                        "Cân nặng cơ thể",
-                                                        style:
-                                                        TextStyle(fontSize: 18),
-                                                      ),
-                                                      content: Row(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                        children: <Widget>[
-                                                          NumberPicker.integer(
-                                                              initialValue: inte,
-                                                              minValue: 10,
-                                                              maxValue: 100,
-                                                              onChanged: (val) {
-                                                                setState(() {
-                                                                  inte = val;
-                                                                });
-                                                              }),
-                                                          Text(
-                                                            ",",
-                                                            style: TextStyle(
-                                                                fontSize: 18),
-                                                          ),
-                                                          NumberPicker.integer(
-                                                              initialValue: decal,
-                                                              minValue: 1,
-                                                              maxValue: 9,
-                                                              onChanged: (val1) {
-                                                                setState(() {
-                                                                  decal = val1;
-                                                                });
-                                                              })
-                                                        ],
-                                                      ),
-                                                      actions: <Widget>[
-                                                        SizedBox(
-                                                          width: 80,
-                                                          height: 52,
-                                                          child: RaisedButton(
-                                                            onPressed: () {
-                                                              weight = inte +
-                                                                  decal * 0.1;
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: Text("OK",
-                                                                style: TextStyle(
-                                                                  color: Colors
-                                                                      .black45,
-                                                                  fontSize: 18,
-                                                                )),
-                                                            color:
-                                                            Color(0xffffffff),
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                    .circular(
-                                                                    6))),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            },
-                                            textColor: Colors.black45,
-                                            elevation: 0.1,
-                                            child: Text(
-                                              "$weight kg",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.normal),
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                  //----------Chiều cao------------
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
-                                    child: Row(
+                                    ),
+
+                                    //----------Cân nặng------------
+                                    Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
+                                        //NumberPicker.integer(initialValue: _integer, minValue: 0, maxValue: 100, onChanged: (val)=>setState(()=>_integer = val)),
                                         Row(
                                           children: <Widget>[
                                             Container(
-                                                width: 50,
-                                                child: Image.asset("assets/images/icon_height.png")),
-                                            Text(
-                                              "Chiều cao",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black45),
+                                                width: 25,
+                                                child: Image.asset("assets/images/icon_weight.png")),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8),
+                                              child: Text("Cân Nặng",
+                                                style: TextStyle(fontSize: 18,color: Colors.black45),
+                                              ),
                                             ),
                                           ],
                                         ),
                                         Container(
-                                            width: 150,
+                                            width: 140,
                                             height: 60,
                                             decoration: BoxDecoration(
-                                                border:
-                                                Border.all(color: Colors.black45),
+                                                border: Border.all(color: Colors.black45),
+                                                borderRadius: BorderRadius.all(Radius.circular(6),)),
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                showDialog<double>(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Stack(
+                                                        alignment: Alignment.center,
+                                                        children: <Widget>[
+                                                          NumberPickerDialog.decimal(title: Text("Cân nặng"),minValue: 10, maxValue: 100, initialDoubleValue: weight,decimalPlaces: 2,),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(bottom: 15),
+                                                              child:Icon(Icons.brightness_1,size: 5,)
+                                                          )
+                                                        ],
+                                                      );
+                                                     }).then((double onValue){
+                                                      if(onValue != null){
+                                                        setState(() {
+                                                          weight = onValue;
+                                                        });
+                                                      }
+                                                });
+                                              },
+                                              textColor: Colors.black45,
+                                              elevation: 0.1,
+                                              child: Text(
+                                                "$weight kg",
+                                                style: TextStyle(fontSize: 18,fontWeight:FontWeight.normal),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                    //----------Chiều cao------------
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 25,
+                                                  child: Image.asset("assets/images/icon_height.png")),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 8),
+                                                child: Text(
+                                                  "Chiều cao",
+                                                  style: TextStyle(fontSize: 18, color: Colors.black45),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                              width: 140,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.black45),
+                                                  borderRadius:BorderRadius.all(Radius.circular(6),)),
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                  showDialog<double>(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Stack(
+                                                          alignment: Alignment.center,
+                                                          children: <Widget>[
+                                                            NumberPickerDialog.decimal(title: Text("Chiều cao"),minValue: 0, maxValue: 3, initialDoubleValue: height,decimalPlaces: 2,),
+                                                            Padding(
+                                                                padding: const EdgeInsets.only(bottom: 15),
+                                                                child:Icon(Icons.brightness_1,size: 5,)
+                                                            )
+                                                          ],
+                                                        );
+                                                      }).then((double onValue){
+                                                    if(onValue != null){
+                                                      setState(() {
+                                                        height = onValue;
+                                                      });
+                                                    }
+
+                                                  });
+                                                },
+                                                textColor: Colors.black45,
+                                                elevation: 0.1,
+                                                child: Text(
+                                                  "$height m",
+                                                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.normal),
+                                                ),
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                    //---------- Độ dài bước chân
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                                width: 25,
+                                                child: Image.asset("assets/images/icon1.png")),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8),
+                                              child: Text(
+                                                "Độ dài bước chân",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black45),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Container(
+                                            width: 140,
+                                            height: 60,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black45),
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(6),
                                                 )),
                                             child: MaterialButton(
                                               onPressed: () {
-                                                showDialog(
+                                                showDialog<int>(
                                                     context: context,
                                                     builder: (context) {
-                                                      return new AlertDialog(
-                                                        title: Text(
-                                                          "Chiều cao cơ thể",
-                                                          style:
-                                                          TextStyle(fontSize: 18),
-                                                        ),
-                                                        content: Row(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                          children: <Widget>[
-                                                            NumberPicker.integer(
-                                                                initialValue: height1,
-                                                                minValue: 0,
-                                                                maxValue: 2,
-                                                                onChanged: (val2) {
-                                                                  setState(() {
-                                                                    height1 = val2;
-                                                                  });
-                                                                }),
-                                                            Text(
-                                                              "m",
-                                                              style: TextStyle(
-                                                                  fontSize: 18),
-                                                            ),
-                                                            NumberPicker.integer(
-                                                                initialValue: height2,
-                                                                minValue: 1,
-                                                                maxValue: 99,
-                                                                onChanged: (val3) {
-                                                                  setState(() {
-                                                                    height2 = val3;
-                                                                  });
-                                                                })
-                                                          ],
-                                                        ),
-                                                        actions: <Widget>[
-                                                          SizedBox(
-                                                            width: 80,
-                                                            height: 52,
-                                                            child: RaisedButton(
-                                                              onPressed: () {
-                                                                height = '$height1 m $height2';
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child: Text("OK",
-                                                                  style: TextStyle(
-                                                                    color: Colors
-                                                                        .black45,
-                                                                    fontSize: 18,
-                                                                  )),
-                                                              color:
-                                                              Color(0xffffffff),
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                  BorderRadius
-                                                                      .all(Radius
-                                                                      .circular(
-                                                                      6))),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      );
-                                                    });
+                                                      return NumberPickerDialog.integer(title: Text("Độ dài bước chân"),minValue: 10, maxValue: 80, initialIntegerValue:integer);
+                                                    }).then((int onValue){
+                                                      if(onValue!=null){
+                                                        setState(() {
+                                                          footstep = onValue;
+                                                        });
+                                                      }
+                                                });
                                               },
                                               textColor: Colors.black45,
                                               elevation: 0.1,
                                               child: Text(
-                                                "$height",
+                                                "$footstep cm",
                                                 style: TextStyle(
                                                     fontSize: 18,
-                                                    fontWeight: FontWeight.normal),
+                                                    fontWeight:
+                                                        FontWeight.normal),
                                               ),
                                             ))
                                       ],
                                     ),
-                                  ),
-                                  //---------- Độ dài bước chân
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-
-                                          Padding(
-                                            padding:
-                                            const EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              "Độ dài bước chân",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black45),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                          width: 150,
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                              border:
-                                              Border.all(color: Colors.black45),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(6),
-                                              )),
-                                          child: MaterialButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return new AlertDialog(
-                                                      title: Text(
-                                                        "Độ dài bước chân",
-                                                        style:
-                                                        TextStyle(fontSize: 18),
-                                                      ),
-                                                      content: Row(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                        children: <Widget>[
-                                                          NumberPicker.integer(
-                                                              initialValue: integer,
-                                                              minValue: 10,
-                                                              maxValue: 80,
-                                                              onChanged: (val6) {
-                                                                setState(() {
-                                                                  integer = val6;
-                                                                });
-                                                              }),
-
-                                                        ],
-                                                      ),
-                                                      actions: <Widget>[
-                                                        SizedBox(
-                                                          width: 80,
-                                                          height: 52,
-                                                          child: RaisedButton(
-                                                            onPressed: () {
-                                                             footstep = integer;
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: Text("OK",
-                                                                style: TextStyle(
-                                                                  color: Colors
-                                                                      .black45,
-                                                                  fontSize: 18,
-                                                                )),
-                                                            color:
-                                                            Color(0xffffffff),
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                    .circular(
-                                                                    6))),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                            },
-                                            textColor: Colors.black45,
-                                            elevation: 0.1,
-                                            child: Text(
-                                              "$footstep cm",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.normal),
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                ],
+                                  ],
                                 ),
-
                               ),
-
                             ],
                           ),
                         ),
@@ -568,5 +401,4 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
             ),
     );
   }
-
 }
