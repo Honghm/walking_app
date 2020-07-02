@@ -166,7 +166,6 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                                   ),
                                                 ),
                                                 value: selectedGender,
-                                                //items: _dropdownMenuItems,
                                                 onChanged: //onChangeDropdownItem,
                                                     (Gender Value) {
                                                   setState(() {
@@ -218,7 +217,6 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        //NumberPicker.integer(initialValue: _integer, minValue: 0, maxValue: 100, onChanged: (val)=>setState(()=>_integer = val)),
                                         Row(
                                           children: <Widget>[
                                             Container(
@@ -270,6 +268,7 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                             ))
                                       ],
                                     ),
+
                                     //----------Chiều cao------------
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
@@ -332,6 +331,7 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                         ],
                                       ),
                                     ),
+
                                     //---------- Độ dài bước chân
                                     Row(
                                       mainAxisAlignment:
@@ -388,6 +388,58 @@ class _RegisterPageStateCoun extends State<RegisterPageCoun> {
                                               ),
                                             ))
                                       ],
+                                    ),
+
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.fromLTRB(0, 30, 0, 20),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        height: 52,
+                                        child: RaisedButton(
+                                          onPressed: () async {
+                                            print(selectedGender.gender);
+                                            if (user.loginGoogle==true)
+                                              user.signUp_Google(
+                                                  widget._name,
+                                                  widget._email,
+                                                  widget._phone,
+                                                  weight.toString(),
+                                                  height.toString(),
+                                                  selectedGender.gender,
+                                                footstep.toString(),
+                                              );
+                                            else {
+                                              if (!await user.signUp(
+                                                  widget._name,
+                                                  widget._email,
+                                                  widget._pass,
+                                                  widget._phone,
+                                                  weight.toString(),
+                                                  height.toString(),
+                                                  selectedGender.gender,
+                                                  footstep.toString(),
+                                              )) {
+                                                _key.currentState.showSnackBar(
+                                                    SnackBar(
+                                                        content: Text(
+                                                            "Đăng ký thất bại")));
+                                                return;
+                                              }
+                                            }
+                                            Navigator.pushNamed(context, '/login');
+                                          },
+                                          child: Text(
+                                            "Đăng ký",
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 18),
+                                          ),
+                                          color: Color(0xff3277D8),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(6))),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),

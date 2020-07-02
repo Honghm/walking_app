@@ -148,7 +148,7 @@ class UserProvider with ChangeNotifier {
   //-------------------Đăng Ký-------------------------------------
 
   Future<bool> signUp(String name, String account, String password,
-      String phone, String weight, String height, String gender) async {
+      String phone, String weight, String height, String gender, String footstep) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
@@ -162,6 +162,7 @@ class UserProvider with ChangeNotifier {
           'weight': weight,
           'height': height,
           'gender': gender,
+          'footstep':footstep,
           'url_avt':
               'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background.jpg?alt=media&token=a122f72e-73fa-4743-9090-0e0eb40711e9',
           'url_cover':
@@ -178,7 +179,7 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<bool> signUp_Google(String name, String email, String phone,
-      String weight, String height, String gender) async {
+      String weight, String height, String gender, String  footstep) async {
     try {
       _firestore.collection('users').document(account.id).setData({
         'name': name,
@@ -188,6 +189,7 @@ class UserProvider with ChangeNotifier {
         'weight': weight,
         'height': height,
         'gender': gender,
+        'footstep':footstep,
         'url_avt':
             'https://firebasestorage.googleapis.com/v0/b/walking-app-1eadb.appspot.com/o/background.jpg?alt=media&token=a122f72e-73fa-4743-9090-0e0eb40711e9',
         'url_cover':
