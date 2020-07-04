@@ -1,3 +1,6 @@
+
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -292,33 +295,21 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> checkAccount(String account, String password) async {
-    Firestore.instance
-        .collection('users')
-        .where("account", isEqualTo: account)
-        .snapshots()
-        .listen((data) {
-      if (data.documents.length != 0) {
-        print("đúng tài khoản");
-        Firestore.instance
-            .collection('users')
-            .where("pass", isEqualTo: password)
-            .snapshots()
-            .listen((data) {
-          if (data.documents.length != 0) {
-            print("đúng pass");
-            Firestore.instance
-                .collection('users')
-                .where("account", isEqualTo: account)
-                .snapshots()
-                .listen((data) => data.documents.forEach((doc) {
-                      _userData = UserData.formSnapShot(doc);
-                      notifyListeners();
-                    }));
-          }
-        });
-      }
-    });
+  bool checkAccount(String account) {
+    for(UserData user in listUser){
+      if(account == user.account)
+        return false;
+    }
     return true;
   }
+  List<UserData> listUser = [];
+  Future<List<UserData>> getListUser() async =>
+      _firestore.collection("users").getDocuments().then((snap){
+        listUser.clear();
+       for(DocumentSnapshot item in snap.documents){
+         listUser.add(UserData.formSnapShot(item));
+         print(listUser.length);
+       }
+        return listUser;
+      });
 }

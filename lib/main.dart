@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:walkingapp/provider/chart_provider.dart';
 import 'package:walkingapp/provider/home_provider.dart';
+import 'package:walkingapp/provider/push_notification.dart';
 import 'package:walkingapp/provider/timer_provider.dart';
 import 'package:walkingapp/provider/user_provider.dart';
 import 'package:walkingapp/screens/intro_page.dart';
@@ -9,6 +13,8 @@ import 'package:walkingapp/screens/login_page.dart';
 import 'package:walkingapp/screens/main_page.dart';
 import 'package:walkingapp/screens/profile_page.dart';
 import 'package:walkingapp/screens/register_page.dart';
+
+import 'package:walkingapp/screens/notification.dart';
 void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +28,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -39,6 +47,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 

@@ -198,7 +198,7 @@ void followStep(int step){
   double get distanceTarget => _distanceTarget;
 
   set distanceTarget(double value) {
-    _distanceTarget = value;
+    _distanceTarget = num.parse(value.toStringAsFixed(4));
     notifyListeners();
   }
   void folowDistance(double distances){

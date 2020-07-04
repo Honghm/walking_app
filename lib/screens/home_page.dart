@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/home_provider.dart';
 import 'package:walkingapp/provider/timer_provider.dart';
 import 'package:walkingapp/provider/user_provider.dart';
@@ -22,7 +23,11 @@ class _HomePageState extends State<HomePage> {
     final time = Provider.of<TimerProvider>(context);
     final home = Provider.of<HomeProvider>(context);
     final user = Provider.of<UserProvider>(context);
-
+    ResponsiveWidgets.init(context,
+      height: 1520, // Optional
+      width: 720, // Optional
+      allowFontScaling: true, // Optional
+    );
     return Column(
       children: <Widget>[
         //---------------Map View------------------------
@@ -42,17 +47,17 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               //----------Button điều khiển------------------
-              Container(
-                height: 60,
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+              ContainerResponsive(
+                height: ScreenUtil().setHeight(250),
+                padding: EdgeInsetsResponsive.fromLTRB(40, 20, 40, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
 
                     //-------------Button Pause-------------
-                    Container(
-                      height: 50,
-                      width: 50,
+                    ContainerResponsive(
+                      height: ScreenUtil().setHeight(200),
+                      width: ScreenUtil().setWidth(200),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: isStarting
@@ -79,42 +84,39 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     //------------Button Start-----------------
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color:
-                            isStopping ? Colors.green : Colors.transparent),
-                        child: IconButton(
-                          onPressed: isStarting ? null : () {
-                            setState(() {
-                              isStarting = true;
-                              isStopping = false;
-                            });
-                            if (isStarting == true) {
-                              home.height = double.parse(user.userData.height);
-                              home.weight = double.parse(user.userData.weight);
-                              time.startStopwatch();
-                              home.dispose();
-                              home.getCurrentLocation(context: context, Case: 1);
-                              home.startListeningStep();
-                            }
-                          },
-                          icon: Icon(
-                            Icons.play_arrow,
-                            color: isStarting ? Colors.transparent : Colors.white,
-                          ),
+                    ContainerResponsive(
+                      height: ScreenUtil().setHeight(200),
+                      width: ScreenUtil().setWidth(200),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color:
+                          isStopping ? Colors.green : Colors.transparent),
+                      child: IconButton(
+                        onPressed: isStarting ? null : () {
+                          setState(() {
+                            isStarting = true;
+                            isStopping = false;
+                          });
+                          if (isStarting == true) {
+                            home.height = double.parse(user.userData.height);
+                            home.weight = double.parse(user.userData.weight);
+                            time.startStopwatch();
+                            home.dispose();
+                            home.getCurrentLocation(context: context, Case: 1);
+                            home.startListeningStep();
+                          }
+                        },
+                        icon: Icon(
+                          Icons.play_arrow,
+                          color: isStarting ? Colors.transparent : Colors.white,
                         ),
                       ),
                     ),
 
                     //--------------Button Stop-----------------
-                    Container(
-                      height: 50,
-                      width: 50,
+                    ContainerResponsive(
+                      height: ScreenUtil().setHeight(200),
+                      width: ScreenUtil().setWidth(200),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           color: isStarting ? Colors.red : Colors.transparent),
@@ -144,9 +146,9 @@ class _HomePageState extends State<HomePage> {
 
               //-----------Count View-----------------------
               Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  height: 200,
+                padding: EdgeInsetsResponsive.only(top: 40),
+                child: ContainerResponsive(
+                  height: ScreenUtil().setHeight(790),
                     child: CountView()),
               ),
             ],

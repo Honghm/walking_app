@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/user_provider.dart';
 class HomeMenu extends StatefulWidget {
   @override
@@ -10,6 +11,11 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
+    ResponsiveWidgets.init(context,
+      height: 1520, // Optional
+      width: 720, // Optional
+      allowFontScaling: true, // Optional
+    );
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -25,16 +31,16 @@ class _HomeMenuState extends State<HomeMenu> {
                   end: Alignment.bottomCenter,
 
                 )),
-            accountName: Text(
+            accountName: TextResponsive(
               user.userData.name,
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70), fontWeight: FontWeight.bold),
             ),
-            accountEmail: Text(user.userData.account),
+            accountEmail: TextResponsive(user.userData.account, style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(50), fontWeight: FontWeight.normal)),
             currentAccountPicture: GestureDetector(
               child: ClipOval(
-                child: SizedBox(
-                  width: 120,
-                    height: 120,
+                child: SizedBoxResponsive(
+                  width: ScreenUtil().setWidth(300),
+                    height: ScreenUtil().setHeight(300),
                     child: Image.network(user.userData.urlAvt, fit: BoxFit.fill,))
               ),
             ),
@@ -45,13 +51,17 @@ class _HomeMenuState extends State<HomeMenu> {
             Navigator.pushNamed(context, '/profile');
             },
             child: ListTile(
-              leading: Icon(
-                Icons.person,
-                color: Colors.blue,
+              leading: ContainerResponsive(
+                height: ScreenUtil().setHeight(50),
+                width: ScreenUtil().setWidth(50),
+                child: Icon(
+                  Icons.person,
+                  color: Colors.blue,
+                ),
               ),
-              title: Text(
+              title: TextResponsive(
                 "Thông tin cá nhân",
-                style: TextStyle(fontSize: 18, color: Color(0xff323643)),
+                style: TextStyle(fontSize: ScreenUtil().setSp(70), color: Color(0xff323643)),
               ),
             ),
           ),
@@ -62,9 +72,9 @@ class _HomeMenuState extends State<HomeMenu> {
                 Icons.help,
                 color: Colors.blue,
               ),
-              title: Text(
+              title: TextResponsive(
                 "Trợ giúp & Liên hệ",
-                style: TextStyle(fontSize: 18, color: Color(0xff323643)),
+                style: TextStyle(fontSize: ScreenUtil().setSp(70), color: Color(0xff323643)),
               ),
             ),
           ),
@@ -78,9 +88,9 @@ class _HomeMenuState extends State<HomeMenu> {
                 Icons.exit_to_app,
                 color: Colors.blue,
               ),
-              title: Text(
+              title: TextResponsive(
                 "Đăng xuất",
-                style: TextStyle(fontSize: 18, color: Color(0xff323643)),
+                style: TextStyle(fontSize: ScreenUtil().setSp(70), color: Color(0xff323643)),
               ),
             ),
           ),

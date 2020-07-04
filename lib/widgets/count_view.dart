@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/home_provider.dart';
 import 'package:walkingapp/provider/timer_provider.dart';
 
@@ -15,14 +16,19 @@ class _CountViewState extends State<CountView> {
   Widget build(BuildContext context) {
     final time = Provider.of<TimerProvider>(context);
     final home = Provider.of<HomeProvider>(context);
+    ResponsiveWidgets.init(context,
+      height: 1520, // Optional
+      width: 720, // Optional
+      allowFontScaling: true, // Optional
+    );
     return Column(
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              width: 150,
-              height: 70,
+            ContainerResponsive(
+              width: ScreenUtil().setWidth(600),
+              height: ScreenUtil().setHeight(270),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 border: Border.all(color: Colors.blue, width: 3),
@@ -30,15 +36,15 @@ class _CountViewState extends State<CountView> {
               ),
               child: ListTile(
                 leading:Icon(Icons.directions_walk, size: 30, color: Colors.white,),
-                title: Text(home.stepCount.toString(), style: TextStyle(color: Colors.white, fontSize: 20),),
-                subtitle: Text("Số bước",style: TextStyle(color: Colors.grey, fontSize: 13,fontWeight: FontWeight.bold)),
+                title: TextResponsive(home.stepCount.toString(), style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70)),),
+                subtitle: TextResponsive("Số bước",style: TextStyle(color: Colors.grey, fontSize: ScreenUtil().setSp(50),fontWeight: FontWeight.bold)),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30),
-              child: Container(
-                width: 150,
-                height: 70,
+              child:  ContainerResponsive(
+                width: ScreenUtil().setWidth(600),
+                height: ScreenUtil().setHeight(270),
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   border: Border.all(color: Colors.red, width: 3),
@@ -46,8 +52,8 @@ class _CountViewState extends State<CountView> {
                 ),
                 child: ListTile(
                   leading:Icon(Icons.timer, size: 30, color: Colors.white,),
-                  title: Text(time.timeDisplay.toString(), style: TextStyle(color: Colors.white, fontSize: 18),),
-                  subtitle: Text("Thời gian",style: TextStyle(color: Colors.grey, fontSize: 13,fontWeight: FontWeight.bold)),
+                  title: TextResponsive(time.timeDisplay.toString(), style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70)),),
+                  subtitle: TextResponsive("Thời gian",style: TextStyle(color: Colors.grey, fontSize: ScreenUtil().setSp(50),fontWeight: FontWeight.bold)),
                 ),
               ),
             ),
@@ -59,9 +65,9 @@ class _CountViewState extends State<CountView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                width: 150,
-                height: 70,
+              ContainerResponsive(
+                width: ScreenUtil().setWidth(600),
+                height: ScreenUtil().setHeight(270),
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   border: Border.all(color: Colors.green, width: 3),
@@ -72,15 +78,15 @@ class _CountViewState extends State<CountView> {
                       width: 35,
                       height: 35,
                       child: Image.asset('assets/images/distance.png',fit: BoxFit.fill,)),
-                  title: Text(home.distance.toString() + " km", style: TextStyle(color: Colors.white, fontSize: 18),),
-                  subtitle: Text("Q.đường",style: TextStyle(color: Colors.grey, fontSize: 13,fontWeight: FontWeight.bold)),
+                  title: TextResponsive(home.distance.toString() + " km", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70)),),
+                  subtitle: TextResponsive("Q.đường",style: TextStyle(color: Colors.grey, fontSize: ScreenUtil().setSp(50),fontWeight: FontWeight.bold)),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 30),
-                child: Container(
-                  width: 150,
-                  height: 70,
+                child:  ContainerResponsive(
+                  width: ScreenUtil().setWidth(600),
+                  height: ScreenUtil().setHeight(270),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -92,8 +98,8 @@ class _CountViewState extends State<CountView> {
                         width: 30,
                         height: 30,
                         child: Image.asset('assets/images/burnedx.png',fit: BoxFit.fill,)),
-                    title: Text(home.caloriesBurned.toString(), style: TextStyle(color: Colors.white, fontSize: 18),),
-                    subtitle: Text("Calo",style: TextStyle(color: Colors.grey, fontSize: 14,fontWeight: FontWeight.bold)),
+                    title: TextResponsive(home.caloriesBurned.toString(), style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70)),),
+                    subtitle: TextResponsive("Calo",style: TextStyle(color: Colors.grey, fontSize: ScreenUtil().setSp(50),fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),

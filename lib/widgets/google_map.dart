@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/home_provider.dart';
 
 class MapView extends StatefulWidget {
@@ -18,8 +19,13 @@ class _MapViewState extends State<MapView> {
   @override
   Widget build(BuildContext context) {
     final home = Provider.of<HomeProvider>(context);
-    return Container(
-      height: 350,
+    ResponsiveWidgets.init(context,
+      height: 1520, // Optional
+      width: 720, // Optional
+      allowFontScaling: true, // Optional
+    );
+    return ContainerResponsive(
+      height: ScreenUtil().setHeight(1380),
       child: Stack(
         children: <Widget>[
           GoogleMap(
@@ -33,7 +39,7 @@ class _MapViewState extends State<MapView> {
             },
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(300, 260, 10, 0),
+            padding: EdgeInsetsResponsive.fromLTRB(600, 530, 10, 0),
             child: FloatingActionButton(
                 child: Icon(Icons.location_searching),
                 onPressed: () {

@@ -29,7 +29,6 @@ dependencies:
   provider: ^4.0.4
   image_picker: ^0.6.6+4
   google_maps_flutter: ^0.5.25+2
-  http: ^0.12.0+4
   location: ^3.0.0
   pedometer: ^1.0.0
   font_awesome_flutter: ^8.8.1
@@ -38,11 +37,13 @@ dependencies:
   flutter_polyline_points: ^0.1.0
   fl_chart: ^0.9.3
   firebase_analytics: any
-  firebase_messaging: 6.0.9
+  firebase_messaging: ^6.0.16
   firebase_storage: ^3.1.5
   path: ^1.6.4
   google_sign_in: ^4.5.1
   numberpicker: ^1.2.0
+  responsive_widgets: ^2.0.1
+  firebase_core: ^0.4.0
 
 dev_dependencies:
   flutter_test:

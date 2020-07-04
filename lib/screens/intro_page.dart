@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:responsive_widgets/responsive_widgets.dart';
+import 'package:walkingapp/provider/push_notification.dart';
+import 'package:walkingapp/provider/user_provider.dart';
 import 'package:walkingapp/screens/login_page.dart';
 import 'package:walkingapp/screens/register_page.dart';
 
@@ -8,8 +12,21 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
+  PushNotification _notification = PushNotification();
+  @override
+  void initState() {
+    // TODO: implement initState
+    _notification.initialise();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+    ResponsiveWidgets.init(context,
+      height: 1520, // Optional
+      width: 720, // Optional
+      allowFontScaling: true, // Optional
+    );
     return Center(
       child: Stack(
         children: <Widget>[
@@ -42,9 +59,9 @@ class _IntroPageState extends State<IntroPage> {
               children: <Widget>[
 
                 //------------Logo------------------
-                Container(
-                  height: 80.0,
-                  width: 80.0,
+                ContainerResponsive(
+                  height: ScreenUtil().setHeight(300),
+                  width: ScreenUtil().setWidth(300),
                   child: new CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 100.0,
@@ -63,12 +80,12 @@ class _IntroPageState extends State<IntroPage> {
 
                 //-----------Name App----------------
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: EdgeInsetsResponsive.fromLTRB(0, 20, 0, 0),
                   child: Center(
-                      child: Text(
+                      child: TextResponsive(
                     "RUN APP",
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: ScreenUtil().setSp(120),
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         inherit: false),
@@ -76,12 +93,12 @@ class _IntroPageState extends State<IntroPage> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
+                  padding: EdgeInsetsResponsive.fromLTRB(0, 5, 0, 40),
                   child: Center(
-                      child: Text(
+                      child: TextResponsive(
                         "Phầm mềm hỗ trợ chạy bộ",
                         style: TextStyle(
-                            fontSize: 18,
+                            fontSize: ScreenUtil().setSp(70),
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             inherit: false),
@@ -89,10 +106,10 @@ class _IntroPageState extends State<IntroPage> {
                 ),
 
                 //------------Button Đăng nhập-------------
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 52,
-                  child: Container(
+                SizedBoxResponsive(
+                  width: double.infinity,
+                  height: ScreenUtil().setHeight(200),
+                  child: ContainerResponsive(
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -107,15 +124,16 @@ class _IntroPageState extends State<IntroPage> {
                     ),
                     child: RaisedButton(
                       color: Colors.black26,
-                      onPressed: () {
+                      onPressed: () async {
+                        await user.getListUser();
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => LoginPage()));
                       },
-                      child: Text(
+                      child: TextResponsive(
                         "Đăng nhập",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: ScreenUtil().setSp(70),
                             fontWeight: FontWeight.bold),
                       ),
                       shape: RoundedRectangleBorder(
@@ -126,11 +144,11 @@ class _IntroPageState extends State<IntroPage> {
 
                 //------------Button Đăng ký----------------
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 52,
-                    child: Container(
+                  padding: EdgeInsetsResponsive.only(top: 30),
+                  child: SizedBoxResponsive(
+                    width: double.infinity,
+                    height: ScreenUtil().setHeight(200),
+                    child: ContainerResponsive(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -144,17 +162,18 @@ class _IntroPageState extends State<IntroPage> {
                         border: Border.all(color: Colors.red, width: 2)
                       ),
                       child: RaisedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await user.getListUser();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => RegisterPage()));
                         },
-                        child: Text(
+                        child: TextResponsive(
                           "Đăng ký",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: ScreenUtil().setSp(70),
                               fontWeight: FontWeight.bold),
                         ),
                         color: Colors.black26,
