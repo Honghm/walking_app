@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
-import 'package:walkingapp/provider/push_notification.dart';
 import 'package:walkingapp/provider/user_provider.dart';
 import 'package:walkingapp/screens/login_page.dart';
 import 'package:walkingapp/screens/register_page.dart';
@@ -12,13 +11,7 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
-  PushNotification _notification = PushNotification();
-  @override
-  void initState() {
-    // TODO: implement initState
-    _notification.initialise();
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
