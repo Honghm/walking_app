@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/home_provider.dart';
@@ -18,16 +20,22 @@ class _HomePageState extends State<HomePage> {
   bool isStopping = true;
   bool isHomePageSelected = true;
   bool isProfilePageSelected = false;
+
+
   @override
   Widget build(BuildContext context) {
     final time = Provider.of<TimerProvider>(context);
     final home = Provider.of<HomeProvider>(context);
     final user = Provider.of<UserProvider>(context);
+    home.initializing();
     ResponsiveWidgets.init(context,
       height: 1520, // Optional
       width: 720, // Optional
       allowFontScaling: true, // Optional
     );
+    home.height = double.parse(user.userData.height);
+    home.weight = double.parse(user.userData.weight);
+    home.foot_step = double.parse(user.userData.foot_step);
     return Column(
       children: <Widget>[
         //---------------Map View------------------------
@@ -93,13 +101,13 @@ class _HomePageState extends State<HomePage> {
                           isStopping ? Colors.green : Colors.transparent),
                       child: IconButton(
                         onPressed: isStarting ? null : () {
+                          //home.showNotifications();
                           setState(() {
                             isStarting = true;
                             isStopping = false;
                           });
                           if (isStarting == true) {
-                            home.height = double.parse(user.userData.height);
-                            home.weight = double.parse(user.userData.weight);
+
                             time.startStopwatch();
                             home.dispose();
                             home.getCurrentLocation(context: context, Case: 1);

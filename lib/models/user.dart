@@ -8,6 +8,7 @@ class UserData {
   static const PASS = 'pass';
   static const HEIGHT = 'height';
   static const WEIGHT = 'weight';
+  static const FOOT_STEP = 'footstep';
   static const URL_AVT = 'url_avt';
   static const URL_COVER = 'url_cover';
   String _id;
@@ -19,6 +20,13 @@ class UserData {
   String _height;
   String _urlAvt;
   String _urlCover;
+  String _foot_step;
+
+  String get foot_step => _foot_step;
+
+  set foot_step(String value) {
+    _foot_step = value;
+  }
 
   String get urlCover => _urlCover;
 
@@ -63,6 +71,7 @@ class UserData {
     _height = data[HEIGHT];
     _urlAvt = data[URL_AVT];
     _urlCover = data[URL_COVER];
+    _foot_step = data[FOOT_STEP];
   }
 
 

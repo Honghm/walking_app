@@ -10,9 +10,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
-        android:name=".Application"
-        android:label="walkingapp"
-        android:icon="@mipmap/ic_launcher">
+        android:name="io.flutter.app.FlutterApplication"
+        android:label="Walking App"
+        android:icon="@mipmap/step">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD0Yk-xw_f8j0jVe-96yWVveCq1m6_gHAs"/>
         <activity

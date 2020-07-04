@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/home_provider.dart';
@@ -11,7 +13,73 @@ class CountView extends StatefulWidget {
 
 class _CountViewState extends State<CountView> {
 
-
+//  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//  FlutterLocalNotificationsPlugin();
+//  AndroidInitializationSettings androidInitializationSettings;
+//  IOSInitializationSettings iosInitializationSettings;
+//  InitializationSettings initializationSettings;
+//
+//  @override
+//  void initState() {
+//    super.initState();
+//    initializing();
+//  }
+//
+//
+//  void initializing() async {
+//    androidInitializationSettings = AndroidInitializationSettings('pngwave');
+//    iosInitializationSettings = IOSInitializationSettings(
+//        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+//    initializationSettings = InitializationSettings(
+//        androidInitializationSettings, iosInitializationSettings);
+//    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+//        onSelectNotification: onSelectNotification);
+//  }
+//
+//  void _showNotifications() async {
+//    await notification();
+//  }
+//
+//  Future<void> notification() async {
+//    AndroidNotificationDetails androidNotificationDetails =
+//    AndroidNotificationDetails(
+//        'Channel ID', 'Channel title', 'Channel body',
+//        priority: Priority.High,
+//        importance: Importance.Max,
+//        ticker: 'test');
+//
+//    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+//
+//    NotificationDetails notificationDetails =
+//    NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+//    await flutterLocalNotificationsPlugin.show(
+//        0, 'Chúc mừng', 'Bạn đã hoàn thành mục tiêu', notificationDetails);
+//  }
+//
+//
+//  Future onSelectNotification(String payLoad) {
+//    if (payLoad != null) {
+//      print(payLoad);
+//    }
+//
+//    // we can set navigator to navigate another screen
+//  }
+//
+//  Future onDidReceiveLocalNotification(
+//      int id, String title, String body, String payload) async {
+//    return CupertinoAlertDialog(
+//      title: Text(title),
+//      content: Text(body),
+//      actions: <Widget>[
+//        CupertinoDialogAction(
+//            isDefaultAction: true,
+//            onPressed: () {
+//              print("");
+//            },
+//            child: Text("Okay")),
+//      ],
+//    );
+//  }
   @override
   Widget build(BuildContext context) {
     final time = Provider.of<TimerProvider>(context);
@@ -26,7 +94,7 @@ class _CountViewState extends State<CountView> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ContainerResponsive(
+          ContainerResponsive(
               width: ScreenUtil().setWidth(600),
               height: ScreenUtil().setHeight(270),
               decoration: BoxDecoration(

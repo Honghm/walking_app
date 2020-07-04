@@ -12,13 +12,14 @@ class _TargetPageState extends State<TargetPage> {
   final TextEditingController _distanceController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _caloriesController = TextEditingController();
+  bool isChange = false;
   @override
   Widget build(BuildContext context) {
     final home = Provider.of<HomeProvider>(context);
-    _stepController.text = home.stepTarget.toString();
-    _distanceController.text = home.distanceTarget.toString();
-    _timeController.text = home.timeTarget.toString();
-    _caloriesController.text = home.caloriesTarget.toString();
+    _stepController.text = home.stepTemp.toString();
+    _distanceController.text = home.distanceTemp.toString();
+    _timeController.text = home.timeTemp.toString();
+    _caloriesController.text = home.caloriesTemp.toString();
     ResponsiveWidgets.init(context,
       height: 1520, // Optional
       width: 720, // Optional
@@ -71,9 +72,12 @@ class _TargetPageState extends State<TargetPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTarget < 1000) ? null : (){
-                              home.stepTarget -= 10;
-                              home.followStep( home.stepTarget);
+                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTemp <= 1000) ? null : (){
+                              home.stepTemp -= 100;
+                              home.followStep( home.stepTemp);
+                              setState(() {
+                                isChange = true;
+                              });
                             }),
                             ContainerResponsive(
                               child: InkWell(
@@ -88,8 +92,12 @@ class _TargetPageState extends State<TargetPage> {
                                           actions: <Widget>[
                                             MaterialButton(
                                               onPressed: (){
-                                                home.stepTarget = int.parse(_stepController.text);
-                                                home.followStep( home.stepTarget);
+                                                setState(() {
+                                                  isChange = true;
+                                                });
+                                                home.stepTemp = int.parse(_stepController.text);
+                                                home.followStep( home.stepTemp);
+
                                                 Navigator.of(context).pop(context);
                                               },
                                               child: Text("Lưu",
@@ -98,7 +106,7 @@ class _TargetPageState extends State<TargetPage> {
                                             ),
                                             MaterialButton(
                                               onPressed: (){
-                                                _stepController.text = home.stepTarget.toString();
+                                                _stepController.text = home.stepTemp.toString();
                                                 Navigator.of(context).pop(context);
                                               },
                                               child: Text("Thoát",
@@ -112,15 +120,19 @@ class _TargetPageState extends State<TargetPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    TextResponsive(home.stepTarget.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                    TextResponsive(home.stepTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
                                     TextResponsive("Số bước",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
                                   ],
                                 ),
                               ),
                             ),
                             IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                              home.stepTarget += 10;
-                              home.followStep( home.stepTarget);
+                              home.stepTemp += 100;
+                              setState(() {
+                                isChange = true;
+                              });
+                              home.followStep( home.stepTemp);
+
                             }),
                           ],
                         ),
@@ -140,9 +152,12 @@ class _TargetPageState extends State<TargetPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTarget < 1000) ? null :(){
-                              home.distanceTarget -= 0.1;
-                              home.folowDistance( home.distanceTarget);
+                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTemp <= 1000) ? null :(){
+                              setState(() {
+                                isChange = true;
+                              });
+                              home.distanceTemp -= 100;
+                              home.folowDistance( home.distanceTemp);
                             }),
                             ContainerResponsive(
                               child: InkWell(
@@ -157,8 +172,11 @@ class _TargetPageState extends State<TargetPage> {
                                           actions: <Widget>[
                                             MaterialButton(
                                               onPressed: (){
-                                                home.distanceTarget = double.parse(_distanceController.text);
-                                                home.folowDistance( home.distanceTarget);
+                                                home.distanceTemp = double.parse(_distanceController.text);
+                                                home.folowDistance( home.distanceTemp);
+                                                setState(() {
+                                                  isChange = true;
+                                                });
                                                 Navigator.of(context).pop(context);
                                               },
                                               child: Text("Lưu",
@@ -167,7 +185,7 @@ class _TargetPageState extends State<TargetPage> {
                                             ),
                                             MaterialButton(
                                               onPressed: (){
-                                                _distanceController.text = home.distanceTarget.toString();
+                                                _distanceController.text = home.distanceTemp.toString();
                                                 Navigator.of(context).pop(context);
                                               },
                                               child: Text("Thoát",
@@ -181,15 +199,18 @@ class _TargetPageState extends State<TargetPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    TextResponsive(home.distanceTarget.toString() + " km", style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                    TextResponsive(home.distanceTemp.toString() + " m", style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
                                     TextResponsive("Quãng đường",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
                                   ],
                                 ),
                               ),
                             ),
                             IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                              home.distanceTarget += 0.1;
-                              home.folowDistance( home.distanceTarget);
+                              home.distanceTemp += 100;
+                              home.folowDistance( home.distanceTemp);
+                              setState(() {
+                                isChange = true;
+                              });
                             }),
                           ],
                         ),
@@ -209,9 +230,12 @@ class _TargetPageState extends State<TargetPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTarget < 1000) ? null : (){
-                              home.caloriesTarget -= 1;
-                              home.folowCalories( home.caloriesTarget);
+                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTemp <= 1000) ? null : (){
+                              home.caloriesTemp -= 10;
+                              home.folowCalories( home.caloriesTemp);
+                              setState(() {
+                                isChange = true;
+                              });
                             }),
                             ContainerResponsive(
                               child: InkWell(
@@ -226,8 +250,11 @@ class _TargetPageState extends State<TargetPage> {
                                           actions: <Widget>[
                                             MaterialButton(
                                               onPressed: (){
-                                                home.caloriesTarget = double.parse(_caloriesController.text);
-                                                home.folowCalories( home.caloriesTarget);
+                                                home.caloriesTemp = double.parse(_caloriesController.text);
+                                                home.folowCalories( home.caloriesTemp);
+                                                setState(() {
+                                                  isChange = true;
+                                                });
                                                 Navigator.of(context).pop(context);
                                               },
                                               child: Text("Lưu",
@@ -236,7 +263,7 @@ class _TargetPageState extends State<TargetPage> {
                                             ),
                                             MaterialButton(
                                               onPressed: (){
-                                                _caloriesController.text = home.caloriesTarget.toString();
+                                                _caloriesController.text = home.caloriesTemp.toString();
                                                 Navigator.of(context).pop(context);
                                               },
                                               child: Text("Thoát",
@@ -250,15 +277,18 @@ class _TargetPageState extends State<TargetPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    TextResponsive(home.caloriesTarget.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                    TextResponsive(home.caloriesTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
                                     TextResponsive("calo",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
                                   ],
                                 ),
                               ),
                             ),
                             IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                              home.caloriesTarget += 1;
-                              home.folowCalories( home.caloriesTarget);
+                              home.caloriesTemp += 10;
+                              home.folowCalories( home.caloriesTemp);
+                              setState(() {
+                                isChange = true;
+                              });
                             }),
                           ],
                         ),
@@ -287,7 +317,11 @@ class _TargetPageState extends State<TargetPage> {
                                     actions: <Widget>[
                                       MaterialButton(
                                         onPressed: (){
-                                          home.timeTarget = int.parse(_timeController.text);
+                                          home.timeTemp = int.parse(_timeController.text);
+                                          setState(() {
+                                            isChange = true;
+                                          });
+                                          home.folowTime(home.timeTemp);
                                           Navigator.of(context).pop(context);
                                         },
                                         child: Text("Lưu",
@@ -296,7 +330,7 @@ class _TargetPageState extends State<TargetPage> {
                                       ),
                                       MaterialButton(
                                         onPressed: (){
-                                          _timeController.text = home.timeTarget.toString();
+                                          _timeController.text = home.timeTemp.toString();
                                           Navigator.of(context).pop(context);
                                         },
                                         child: Text("Thoát",
@@ -310,20 +344,28 @@ class _TargetPageState extends State<TargetPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                                home.timeTarget -= 1;
+                              IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTemp <= 1000) ? null :(){
+                                home.timeTemp -= 10;
+                                setState(() {
+                                  isChange = true;
+                                });
+                                home.folowTime(home.timeTemp);
                               }),
                               ContainerResponsive(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    TextResponsive(home.timeTarget.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                    TextResponsive(home.timeTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
                                     TextResponsive("Thời gian",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
                                   ],
                                 ),
                               ),
                               IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                                home.timeTarget += 1;
+                                home.timeTemp += 10;
+                                setState(() {
+                                  isChange = true;
+                                });
+                                home.folowTime(home.timeTemp);
                               }),
                             ],
                           ),
@@ -341,9 +383,13 @@ class _TargetPageState extends State<TargetPage> {
                             height: ScreenUtil().setHeight(200),
                             width: ScreenUtil().setWidth(550),
                             child: FloatingActionButton.extended(
-                              backgroundColor: Colors.green,
+                              backgroundColor: isChange== true ? Colors.green: Colors.green.withOpacity(0.5),
                               label: TextResponsive("LƯU",style: TextStyle(color: Colors.white,fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold),),
-                              onPressed: (){
+                              onPressed: isChange== false?null:(){
+                                home.setTarget();
+                                setState(() {
+                                  isChange=false;
+                                });
                               },
                             ),
                           ),
@@ -355,10 +401,13 @@ class _TargetPageState extends State<TargetPage> {
                               height: ScreenUtil().setHeight(200),
                               width: ScreenUtil().setWidth(550),
                               child:  FloatingActionButton.extended(
-                                backgroundColor: Colors.red,
+                                backgroundColor: isChange==true? Colors.red:Colors.red.withOpacity(0.5),
                                 label: TextResponsive("HỦY",style: TextStyle(color: Colors.white,fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold),),
-                                onPressed: (){
-
+                                onPressed: isChange==false?null:(){
+                                  setState(() {
+                                    isChange = false;
+                                    home.reTarget();
+                                  });
                                 },
                               ),
                             ),

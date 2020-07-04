@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
@@ -29,8 +30,8 @@ class _HomeMenuState extends State<HomeMenu> {
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-
-                )),
+                ),
+            ),
             accountName: TextResponsive(
               user.userData.name,
               style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70), fontWeight: FontWeight.bold),
@@ -44,6 +45,7 @@ class _HomeMenuState extends State<HomeMenu> {
                     child: Image.network(user.userData.urlAvt, fit: BoxFit.fill,))
               ),
             ),
+
           ),
 
           InkWell(
@@ -66,7 +68,46 @@ class _HomeMenuState extends State<HomeMenu> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showDialog(context: context,
+                  builder: (context){
+                return AlertDialog(
+                  title: ContainerResponsive(
+                    child: Row(
+                      children: <Widget>[
+                        ContainerResponsive(
+                          width: ScreenUtil().setWidth(300),
+                          height: ScreenUtil().setHeight(300),
+                          child: Image.asset('assets/images/step.png', fit: BoxFit.fill,),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text('Walking App \n 1.0'),
+                        ),
+                      ],
+                    )
+                  ),
+                  content: ContainerResponsive(
+                    height: ScreenUtil().setHeight(300),
+                    child: Column(
+                      children: <Widget>[
+                        Text("Thông tin liên hệ:", style: TextStyle(fontSize: 18),),
+                        Text("17520526@gm.uit.edu.vn\n18520155@gm.uit.edu.vn", style: TextStyle(fontSize: 18),),
+                      ],
+                    ),
+
+                  ),
+                  actions: <Widget>[
+                    MaterialButton(onPressed: (){
+                      Navigator.of(context).pop(context);
+                    },
+                      child: Text("Đóng",
+                        style: TextStyle(color: Colors.blue),
+                      ),)
+                  ],
+                );
+                  });
+            },
             child: ListTile(
               leading: Icon(
                 Icons.help,
