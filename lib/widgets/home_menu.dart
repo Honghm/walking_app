@@ -122,7 +122,7 @@ class _HomeMenuState extends State<HomeMenu> {
           InkWell(
             onTap: () {
               user.signOut();
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.pushNamed(context, '/intro');
             },
             child: ListTile(
               leading: Icon(

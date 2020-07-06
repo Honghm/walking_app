@@ -76,7 +76,7 @@ class _IntroPageState extends State<IntroPage> {
                   padding: EdgeInsetsResponsive.fromLTRB(0, 20, 0, 0),
                   child: Center(
                       child: TextResponsive(
-                    "RUN APP",
+                    "WALKING APP",
                     style: TextStyle(
                         fontSize: ScreenUtil().setSp(120),
                         color: Colors.white,
@@ -89,7 +89,7 @@ class _IntroPageState extends State<IntroPage> {
                   padding: EdgeInsetsResponsive.fromLTRB(0, 5, 0, 40),
                   child: Center(
                       child: TextResponsive(
-                        "Phầm mềm hỗ trợ chạy bộ",
+                        "Phầm mềm hỗ trợ đi bộ",
                         style: TextStyle(
                             fontSize: ScreenUtil().setSp(70),
                             color: Colors.white,

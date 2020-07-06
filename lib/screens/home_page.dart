@@ -154,9 +154,9 @@ class _HomePageState extends State<HomePage> {
 
               //-----------Count View-----------------------
               Padding(
-                padding: EdgeInsetsResponsive.only(top: 40),
+                padding: EdgeInsetsResponsive.only(top: 80),
                 child: ContainerResponsive(
-                  height: ScreenUtil().setHeight(790),
+                  height: ScreenUtil().setHeight(850),
                     child: CountView()),
               ),
             ],

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/register': (context)=>RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
-      home: LocalNotifications(),
+      home: IntroPage(),
     );
   }
 }
