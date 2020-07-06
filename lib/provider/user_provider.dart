@@ -81,10 +81,14 @@ class UserProvider with ChangeNotifier {
             Navigator.pushNamed(context, '/main');
           } else {
             _key.currentState.showSnackBar(SnackBar(
-                content: Text("Tài khoản hoặc mật khẩu không đúng")));
-            print("đăng nhập không thành công");
+                content: Text("Đăng nhập không thành công! Tài khoản hoặc mật khẩu không đúng")));
+
           }
         });
+      }else {
+        _key.currentState.showSnackBar(SnackBar(
+            content: Text("Đăng nhập không thành công!Tài khoản không tồn tại")));
+
       }
     });
   }
@@ -308,7 +312,6 @@ class UserProvider with ChangeNotifier {
         listUser.clear();
        for(DocumentSnapshot item in snap.documents){
          listUser.add(UserData.formSnapShot(item));
-         print(listUser.length);
        }
         return listUser;
       });

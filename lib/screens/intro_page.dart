@@ -52,24 +52,24 @@ class _IntroPageState extends State<IntroPage> {
               children: <Widget>[
 
                 //------------Logo------------------
-//                ContainerResponsive(
-//                  height: ScreenUtil().setHeight(300),
-//                  width: ScreenUtil().setWidth(300),
-//                  child: new CircleAvatar(
-//                    backgroundColor: Colors.white,
-//                    radius: 100.0,
-//                    child: Image.asset(
-//                      "assets/images/icon.png",
-//                      fit: BoxFit.fill,
-//                    ),
-//                  ),
-//                  decoration: BoxDecoration(
-//                    border: Border.all(
-//                      width: 1.0,
-//                    ),
-//                    shape: BoxShape.circle,
-//                  ),
-//                ),
+                ContainerResponsive(
+                  height: ScreenUtil().setHeight(300),
+                  width: ScreenUtil().setWidth(300),
+                  child: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 100.0,
+                    child: Image.asset(
+                      "assets/images/icon.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                ),
 
                 //-----------Name App----------------
                 Padding(

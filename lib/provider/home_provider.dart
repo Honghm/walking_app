@@ -161,8 +161,7 @@ class HomeProvider with ChangeNotifier {
         updateMap(location, _context);
       else
         updateMap(location, context);
-      print(lat);
-      print(long);
+
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         debugPrint("Permission Denied");

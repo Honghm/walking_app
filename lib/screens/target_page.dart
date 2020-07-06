@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:walkingapp/provider/home_provider.dart';
@@ -12,6 +13,7 @@ class _TargetPageState extends State<TargetPage> {
   final TextEditingController _distanceController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _caloriesController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool isChange = false;
   @override
   Widget build(BuildContext context) {
@@ -25,403 +27,443 @@ class _TargetPageState extends State<TargetPage> {
       width: 720, // Optional
       allowFontScaling: true, // Optional
     );
-    return Stack(
-      children: <Widget>[
-        ContainerResponsive(
-          width: double.infinity,
-          height: ScreenUtil().setHeight(2500),
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.black54,
-                  Colors.blue,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )),
-        ),
-        Padding(
-          padding: EdgeInsetsResponsive.fromLTRB(30, 150, 30, 0),
-          child: Column(
-            children: <Widget>[
-              SizedBoxResponsive(height: ScreenUtil().setHeight(20),),
-              ContainerResponsive(
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                height: ScreenUtil().setHeight(1900),
-                width: double.infinity,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsetsResponsive.only(right: 0),
-                      child: TextResponsive("Đặt mục tiêu", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(100), fontWeight: FontWeight.bold),),
-                    ),
-
-                    //-----------Step target--------------------
-                    Padding(
-                      padding: EdgeInsetsResponsive.fromLTRB(30, 30, 30, 30),
-                      child: ContainerResponsive(
-                        height: ScreenUtil().setHeight(270),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTemp <= 1000) ? null : (){
-                              home.stepTemp -= 100;
-                              home.followStep( home.stepTemp);
-                              setState(() {
-                                isChange = true;
-                              });
-                            }),
-                            ContainerResponsive(
-                              child: InkWell(
-                                onTap: (){
-                                  showDialog(context: context,
-                                      builder: (context){
-                                        return AlertDialog(
-                                          title: Text("Số bước"),
-                                          content: TextField(
-                                            controller: _stepController,
-                                          ),
-                                          actions: <Widget>[
-                                            MaterialButton(
-                                              onPressed: (){
-                                                setState(() {
-                                                  isChange = true;
-                                                });
-                                                home.stepTemp = int.parse(_stepController.text);
-                                                home.followStep( home.stepTemp);
-
-                                                Navigator.of(context).pop(context);
-                                              },
-                                              child: Text("Lưu",
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                            MaterialButton(
-                                              onPressed: (){
-                                                _stepController.text = home.stepTemp.toString();
-                                                Navigator.of(context).pop(context);
-                                              },
-                                              child: Text("Thoát",
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextResponsive(home.stepTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
-                                    TextResponsive("Số bước",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                              home.stepTemp += 100;
-                              setState(() {
-                                isChange = true;
-                              });
-                              home.followStep( home.stepTemp);
-
-                            }),
-                          ],
-                        ),
+    return Form(
+      key: _formKey,
+      child: Stack(
+        children: <Widget>[
+          ContainerResponsive(
+            width: double.infinity,
+            height: ScreenUtil().setHeight(2500),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black54,
+                    Colors.blue,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )),
+          ),
+          Padding(
+            padding: EdgeInsetsResponsive.fromLTRB(30, 150, 30, 0),
+            child: Column(
+              children: <Widget>[
+                SizedBoxResponsive(height: ScreenUtil().setHeight(20),),
+                ContainerResponsive(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  height: ScreenUtil().setHeight(1900),
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsetsResponsive.only(right: 0),
+                        child: TextResponsive("Đặt mục tiêu", style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(100), fontWeight: FontWeight.bold),),
                       ),
-                    ),
 
-                    //-----------Distance target--------------------
-                    Padding(
-                      padding:  EdgeInsetsResponsive.only(left: 30, right: 30),
-                      child: ContainerResponsive(
-                        height: ScreenUtil().setHeight(270),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTemp <= 1000) ? null :(){
-                              setState(() {
-                                isChange = true;
-                              });
-                              home.distanceTemp -= 100;
-                              home.folowDistance( home.distanceTemp);
-                            }),
-                            ContainerResponsive(
-                              child: InkWell(
-                                onTap: (){
-                                  showDialog(context: context,
-                                      builder: (context){
-                                        return AlertDialog(
-                                          title: Text("Quãng đường"),
-                                          content: TextField(
-                                            controller: _distanceController,
-                                          ),
-                                          actions: <Widget>[
-                                            MaterialButton(
-                                              onPressed: (){
-                                                home.distanceTemp = double.parse(_distanceController.text);
-                                                home.folowDistance( home.distanceTemp);
-                                                setState(() {
-                                                  isChange = true;
-                                                });
-                                                Navigator.of(context).pop(context);
-                                              },
-                                              child: Text("Lưu",
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                            MaterialButton(
-                                              onPressed: (){
-                                                _distanceController.text = home.distanceTemp.toString();
-                                                Navigator.of(context).pop(context);
-                                              },
-                                              child: Text("Thoát",
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextResponsive(home.distanceTemp.toString() + " m", style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
-                                    TextResponsive("Quãng đường",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                              home.distanceTemp += 100;
-                              home.folowDistance( home.distanceTemp);
-                              setState(() {
-                                isChange = true;
-                              });
-                            }),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    //------------- Calories Target---------------
-                    Padding(
-                      padding: EdgeInsetsResponsive.fromLTRB(30, 30, 30, 30),
-                      child: ContainerResponsive(
-                        height: ScreenUtil().setHeight(270),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTemp <= 1000) ? null : (){
-                              home.caloriesTemp -= 10;
-                              home.folowCalories( home.caloriesTemp);
-                              setState(() {
-                                isChange = true;
-                              });
-                            }),
-                            ContainerResponsive(
-                              child: InkWell(
-                                onTap: (){
-                                  showDialog(context: context,
-                                      builder: (context){
-                                        return AlertDialog(
-                                          title: Text("Calo"),
-                                          content: TextField(
-                                            controller: _caloriesController,
-                                          ),
-                                          actions: <Widget>[
-                                            MaterialButton(
-                                              onPressed: (){
-                                                home.caloriesTemp = double.parse(_caloriesController.text);
-                                                home.folowCalories( home.caloriesTemp);
-                                                setState(() {
-                                                  isChange = true;
-                                                });
-                                                Navigator.of(context).pop(context);
-                                              },
-                                              child: Text("Lưu",
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                            MaterialButton(
-                                              onPressed: (){
-                                                _caloriesController.text = home.caloriesTemp.toString();
-                                                Navigator.of(context).pop(context);
-                                              },
-                                              child: Text("Thoát",
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextResponsive(home.caloriesTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
-                                    TextResponsive("calo",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                              home.caloriesTemp += 10;
-                              home.folowCalories( home.caloriesTemp);
-                              setState(() {
-                                isChange = true;
-                              });
-                            }),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    //------------- Time Target---------------
-                    Padding(
-                      padding:  EdgeInsetsResponsive.only(left: 30, right: 30),
-                      child: ContainerResponsive(
-                        height: ScreenUtil().setHeight(270),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: InkWell(
-                          onTap: (){
-                            showDialog(context: context,
-                                builder: (context){
-                                  return AlertDialog(
-                                    title: Text("Thời gian (phút)"),
-                                    content: TextField(
-                                      controller: _timeController,
-                                    ),
-                                    actions: <Widget>[
-                                      MaterialButton(
-                                        onPressed: (){
-                                          home.timeTemp = int.parse(_timeController.text);
-                                          setState(() {
-                                            isChange = true;
-                                          });
-                                          home.folowTime(home.timeTemp);
-                                          Navigator.of(context).pop(context);
-                                        },
-                                        child: Text("Lưu",
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                      ),
-                                      MaterialButton(
-                                        onPressed: (){
-                                          _timeController.text = home.timeTemp.toString();
-                                          Navigator.of(context).pop(context);
-                                        },
-                                        child: Text("Thoát",
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                });
-                          },
+                      //-----------Step target--------------------
+                      Padding(
+                        padding: EdgeInsetsResponsive.fromLTRB(30, 30, 30, 30),
+                        child: ContainerResponsive(
+                          height: ScreenUtil().setHeight(270),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTemp <= 1000) ? null :(){
-                                home.timeTemp -= 10;
+                              IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTemp <= 1000) ? null : (){
+                                home.stepTemp -= 100;
+                                home.followStep( home.stepTemp);
                                 setState(() {
                                   isChange = true;
                                 });
-                                home.folowTime(home.timeTemp);
                               }),
                               ContainerResponsive(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextResponsive(home.timeTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
-                                    TextResponsive("Thời gian",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
-                                  ],
+                                child: InkWell(
+                                  onTap: (){
+//                                    showDialog(context: context,
+//                                        builder: (context){
+//                                          return AlertDialog(
+//                                            title: Text("Số bước"),
+//                                            content: TextFormField(
+//                                              controller: _stepController,
+//                                              keyboardType: TextInputType.number,
+//                                              validator: (value){
+//                                                if(value.isNotEmpty){
+//                                                  print(value);
+//                                                  if(int.parse(value)<1000)
+//                                                    return "Số bước chân phải lớn hơn 1000 bước";
+//                                                }
+//                                                return null;
+//                                              },
+//                                            ),
+//                                            actions: <Widget>[
+//                                              MaterialButton(
+//                                                onPressed: (){
+//                                                  if(_formKey.currentState.validate()){
+//                                                    setState(() {
+//                                                      isChange = true;
+//                                                    });
+//                                                    home.stepTemp = int.parse(_stepController.text);
+//                                                    home.followStep( home.stepTemp);
+//
+//                                                    Navigator.of(context).pop(context);
+//                                                  }
+//                                                },
+//                                                child: Text("Lưu",
+//                                                  style: TextStyle(color: Colors.blue),
+//                                                ),
+//                                              ),
+//                                              MaterialButton(
+//                                                onPressed: (){
+//                                                  _stepController.text = home.stepTemp.toString();
+//                                                  Navigator.of(context).pop(context);
+//                                                },
+//                                                child: Text("Thoát",
+//                                                  style: TextStyle(color: Colors.blue),
+//                                                ),
+//                                              )
+//                                            ],
+//                                          );
+//                                        });
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      TextResponsive(home.stepTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                      TextResponsive("Số bước",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
+                                    ],
+                                  ),
                                 ),
                               ),
                               IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
-                                home.timeTemp += 10;
+                                home.stepTemp += 100;
                                 setState(() {
                                   isChange = true;
                                 });
-                                home.folowTime(home.timeTemp);
+                                home.followStep( home.stepTemp);
+
                               }),
                             ],
                           ),
                         ),
                       ),
-                    ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          //--------BUTTON SAVE--------------
-                          SizedBoxResponsive(
-                            height: ScreenUtil().setHeight(200),
-                            width: ScreenUtil().setWidth(550),
-                            child: FloatingActionButton.extended(
-                              backgroundColor: isChange== true ? Colors.green: Colors.green.withOpacity(0.5),
-                              label: TextResponsive("LƯU",style: TextStyle(color: Colors.white,fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold),),
-                              onPressed: isChange== false?null:(){
-                                home.setTarget();
+                      //-----------Distance target--------------------
+                      Padding(
+                        padding:  EdgeInsetsResponsive.only(left: 30, right: 30),
+                        child: ContainerResponsive(
+                          height: ScreenUtil().setHeight(270),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTemp <= 1000) ? null :(){
                                 setState(() {
-                                  isChange=false;
+                                  isChange = true;
                                 });
-                              },
+                                home.distanceTemp -= 100;
+                                home.folowDistance( home.distanceTemp);
+                              }),
+                              ContainerResponsive(
+                                child: InkWell(
+                                  onTap: (){
+//                                    showDialog(context: context,
+//                                        builder: (context){
+//                                          return AlertDialog(
+//                                            title: Text("Quãng đường"),
+//                                            content: TextFormField(
+//                                              keyboardType: TextInputType.number,
+//                                              controller: _distanceController,
+//                                              validator: (value){
+//                                                if(double.parse(value) <= 1000)
+//                                                  return "Quãng đường phải lớn hơn 1000m";
+//                                                return null;
+//                                              },
+//                                            ),
+//                                            actions: <Widget>[
+//                                              MaterialButton(
+//                                                onPressed: (){
+//                                                  if(_formKey.currentState.validate()){
+//                                                    home.distanceTemp = double.parse(_distanceController.text);
+//                                                    home.folowDistance( home.distanceTemp);
+//                                                    setState(() {
+//                                                      isChange = true;
+//                                                    });
+//                                                    Navigator.of(context).pop(context);
+//                                                  }
+//
+//                                                },
+//                                                child: Text("Lưu",
+//                                                  style: TextStyle(color: Colors.blue),
+//                                                ),
+//                                              ),
+//                                              MaterialButton(
+//                                                onPressed: (){
+//                                                  _distanceController.text = home.distanceTemp.toString();
+//                                                  Navigator.of(context).pop(context);
+//                                                },
+//                                                child: Text("Thoát",
+//                                                  style: TextStyle(color: Colors.blue),
+//                                                ),
+//                                              )
+//                                            ],
+//                                          );
+//                                        });
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      TextResponsive(home.distanceTemp.toString() + " m", style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                      TextResponsive("Quãng đường",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
+                                home.distanceTemp += 100;
+                                home.folowDistance( home.distanceTemp);
+                                setState(() {
+                                  isChange = true;
+                                });
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      //------------- Calories Target---------------
+                      Padding(
+                        padding: EdgeInsetsResponsive.fromLTRB(30, 30, 30, 30),
+                        child: ContainerResponsive(
+                          height: ScreenUtil().setHeight(270),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed:  (home.stepTemp <= 1000) ? null : (){
+                                home.caloriesTemp -= 10;
+                                home.folowCalories( home.caloriesTemp);
+                                setState(() {
+                                  isChange = true;
+                                });
+                              }),
+                              ContainerResponsive(
+                                child: InkWell(
+                                  onTap: (){
+//                                    showDialog(context: context,
+//                                        builder: (context){
+//                                          return AlertDialog(
+//                                            title: Text("Calo"),
+//                                            content: TextFormField(
+//                                              validator: (value){
+//                                                if(double.parse(value)<300)
+//                                                  return "Lượng calo phải lớn hơn 300";
+//                                                return null;
+//                                              },
+//                                              keyboardType: TextInputType.number,
+//                                              controller: _caloriesController,
+//                                            ),
+//                                            actions: <Widget>[
+//                                              MaterialButton(
+//                                                onPressed: (){
+//                                                  if(_formKey.currentState.validate()){
+//                                                    home.caloriesTemp = double.parse(_caloriesController.text);
+//                                                    home.folowCalories( home.caloriesTemp);
+//                                                    setState(() {
+//                                                      isChange = true;
+//                                                    });
+//                                                    Navigator.of(context).pop(context);
+//                                                  }
+//                                                },
+//                                                child: Text("Lưu",
+//                                                  style: TextStyle(color: Colors.blue),
+//                                                ),
+//                                              ),
+//                                              MaterialButton(
+//                                                onPressed: (){
+//                                                  _caloriesController.text = home.caloriesTemp.toString();
+//                                                  Navigator.of(context).pop(context);
+//                                                },
+//                                                child: Text("Thoát",
+//                                                  style: TextStyle(color: Colors.blue),
+//                                                ),
+//                                              )
+//                                            ],
+//                                          );
+//                                        });
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      TextResponsive(home.caloriesTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                      TextResponsive("calo",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
+                                home.caloriesTemp += 10;
+                                home.folowCalories( home.caloriesTemp);
+                                setState(() {
+                                  isChange = true;
+                                });
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      //------------- Time Target---------------
+                      Padding(
+                        padding:  EdgeInsetsResponsive.only(left: 30, right: 30),
+                        child: ContainerResponsive(
+                          height: ScreenUtil().setHeight(270),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: InkWell(
+                            onTap: (){
+//                              showDialog(context: context,
+//                                  builder: (context){
+//                                    return AlertDialog(
+//                                      title: Text("Thời gian (phút)"),
+//                                      content: TextFormField(
+//                                        keyboardType: TextInputType.number,
+//                                        controller: _timeController,
+//                                        validator: (value){
+//                                          if(num.parse(value)<30)
+//                                            return 'Thời gian đặt ra phải lớn hơn 30 phút';
+//                                          else
+//                                            return null;
+//                                        },
+//                                      ),
+//                                      actions: <Widget>[
+//                                        MaterialButton(
+//                                          onPressed: (){
+//                                            if(_formKey.currentState.validate()){
+//                                              home.timeTemp = int.parse(_timeController.text);
+//                                              setState(() {
+//                                                isChange = true;
+//                                              });
+//                                              home.folowTime(home.timeTemp);
+//                                              Navigator.of(context).pop(context);
+//                                            }
+//                                          },
+//                                          child: Text("Lưu",
+//                                            style: TextStyle(color: Colors.blue),
+//                                          ),
+//                                        ),
+//                                        MaterialButton(
+//                                          onPressed: (){
+//                                            _timeController.text = home.timeTemp.toString();
+//                                            Navigator.of(context).pop(context);
+//                                          },
+//                                          child: Text("Thoát",
+//                                            style: TextStyle(color: Colors.blue),
+//                                          ),
+//                                        )
+//                                      ],
+//                                    );
+//                                  });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                IconButton(icon: Icon(Icons.remove), iconSize: ScreenUtil().setSp(80), onPressed: (home.stepTemp <= 1000) ? null :(){
+                                  home.timeTemp -= 10;
+                                  setState(() {
+                                    isChange = true;
+                                  });
+                                  home.folowTime(home.timeTemp);
+                                }),
+                                ContainerResponsive(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      TextResponsive(home.timeTemp.toString(), style: TextStyle(fontSize: ScreenUtil().setSp(110), color: Colors.green, fontWeight: FontWeight.bold),),
+                                      TextResponsive("Thời gian",style: TextStyle(fontSize: ScreenUtil().setSp(70)),)
+                                    ],
+                                  ),
+                                ),
+                                IconButton(icon: Icon(Icons.add), iconSize: ScreenUtil().setSp(80), onPressed: (){
+                                  home.timeTemp += 10;
+                                  setState(() {
+                                    isChange = true;
+                                  });
+                                  home.folowTime(home.timeTemp);
+                                }),
+                              ],
                             ),
                           ),
+                        ),
+                      ),
 
-                          //---------BUTTON CANCEL------------
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: SizedBoxResponsive(
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            //--------BUTTON SAVE--------------
+                            SizedBoxResponsive(
                               height: ScreenUtil().setHeight(200),
                               width: ScreenUtil().setWidth(550),
-                              child:  FloatingActionButton.extended(
-                                backgroundColor: isChange==true? Colors.red:Colors.red.withOpacity(0.5),
-                                label: TextResponsive("HỦY",style: TextStyle(color: Colors.white,fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold),),
-                                onPressed: isChange==false?null:(){
+                              child: FloatingActionButton.extended(
+                                backgroundColor: isChange== true ? Colors.green: Colors.green.withOpacity(0.5),
+                                label: TextResponsive("LƯU",style: TextStyle(color: Colors.white,fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold),),
+                                onPressed: isChange== false?null:(){
+                                  home.setTarget();
                                   setState(() {
-                                    isChange = false;
-                                    home.reTarget();
+                                    isChange=false;
                                   });
                                 },
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+
+                            //---------BUTTON CANCEL------------
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: SizedBoxResponsive(
+                                height: ScreenUtil().setHeight(200),
+                                width: ScreenUtil().setWidth(550),
+                                child:  FloatingActionButton.extended(
+                                  backgroundColor: isChange==true? Colors.red:Colors.red.withOpacity(0.5),
+                                  label: TextResponsive("HỦY",style: TextStyle(color: Colors.white,fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold),),
+                                  onPressed: isChange==false?null:(){
+                                    setState(() {
+                                      isChange = false;
+                                      home.reTarget();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

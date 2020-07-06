@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                             isStopping = false;
                           });
                           if (isStarting == true) {
+                            //home.notification();
 
                             time.startStopwatch();
                             home.dispose();
