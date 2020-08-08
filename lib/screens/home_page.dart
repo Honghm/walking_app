@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                           isStopping ? Colors.green : Colors.transparent),
                       child: IconButton(
                         onPressed: isStarting ? null : () {
-                          //home.showNotifications();
+                          home.showNotifications();
                           setState(() {
                             isStarting = true;
                             isStopping = false;
