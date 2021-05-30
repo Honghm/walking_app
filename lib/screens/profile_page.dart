@@ -43,12 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
     avtUrl = user.userData.urlAvt;
     coverUrl = user.userData.urlCover;
 
-    Future getImageAvt() async {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-      setState(() {
-        _imageAvt = image;
-      });
-    }
+
 
     Future getImageCover() async {
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
