@@ -115,6 +115,7 @@ class HomeProvider with ChangeNotifier {
     LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
 
     marker = Marker(
+      
         markerId: MarkerId("home"),
         position: latlng,
         rotation: newLocalData.heading,
